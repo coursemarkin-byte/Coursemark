@@ -1,45 +1,100 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+<meta name="description" content="Create your CourseMark account and start learning from local instructors.">
+<meta name="theme-color" content="#0f1724">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign Up</title>
+<title>Create Account | CourseMark</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
 <nav>
-<div class="logo">CourseMark</div>
-<ul>
-<li><a href="index.html">Home</a></li>
-<li><a href="courses.html">Courses</a></li>
-<li><a href="instructors.html">Instructors</a></li>
-</ul>
+    <a href="index.html" class="logo">CourseMark</a>
+
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="courses.html">Courses</a></li>
+        <li><a href="become-instructor.html">Become Instructor</a></li>
+    </ul>
 </nav>
 
-<div class="login-container">
+<div class="auth-wrapper">
 
-<h1>Create Account</h1>
+    <div class="auth-card">
 
-<form>
+        <h2>Create Your Account </h2>
 
-<input type="text" placeholder="Full Name">
+        <p class="sub">
+            Join CourseMark and start learning from verified local instructors.
+        </p>
 
-<input type="email" placeholder="Email">
+        <form>
 
-<input type="password" placeholder="Password">
+            <div class="input-group">
+                <label>Full Name</label>
+                <input
+                    type="text"
+                    placeholder="Muhammed Safvan"
+                    required>
+            </div>
 
-<input type="password" placeholder="Confirm Password">
+            <div class="input-group">
+                <label>Email Address</label>
+                <input
+                    type="email"
+                    placeholder="you@example.com"
+                    required>
+            </div>
 
-<button type="submit">Create Account</button>
+            <div class="input-group">
+                <label>Password</label>
+                <input
+                    type="password"
+                    placeholder="Create a password"
+                    required>
+            </div>
 
-</form>
+            <div class="input-group">
+                <label>Confirm Password</label>
+                <input
+                    type="password"
+                    placeholder="Confirm your password"
+                    required>
+            </div>
+<div class="input-group">
+    <label>Account Type</label>
 
-<p>
-Already have an account?
-<a href="login.html">Login</a>
-</p>
+    <select>
+        <option>Student</option>
+        <option>Instructor</option>
+    </select>
+</div>
+            <button
+                type="button"
+                class="btn-primary"
+                onclick="window.location.href='student-dashboard.html'">
+
+                Create Account
+
+            </button>
+
+        </form>
+
+        <div style="margin-top:20px;text-align:center;">
+            <button class="btn-primary" style="background:#fff;border:1px solid #ddd;color:#0f1724;">
+                Continue with Google
+            </button>
+        </div>
+
+        <p style="margin-top:20px;text-align:center;">
+            Already have an account?
+            <a href="login.html">Login</a>
+        </p>
+
+    </div>
 
 </div>
-
 </body>
 </html>
+

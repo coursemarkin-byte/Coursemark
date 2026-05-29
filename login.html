@@ -2,42 +2,73 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login</title>
+<title>Login | CourseMark</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <nav>
-<div class="logo">CourseMark</div>
+<a href="index.html" class="logo">CourseMark</a>
 <ul>
 <li><a href="index.html">Home</a></li>
 <li><a href="courses.html">Courses</a></li>
-<li><a href="instructors.html">Instructors</a></li>
+<li><a href="become-instructor.html">Become Instructor</a></li>
 </ul>
 </nav>
+<div class="auth-wrapper">
 
-<div class="login-container">
+<div class="auth-card">
 
-<h1>CourseMark</h1>
+<h2>Welcome Back 👋</h2>
+
+<p class="sub">
+Login to continue learning with CourseMark.
+</p>
 
 <form>
 
-<input type="email" placeholder="Email">
+<div class="input-group">
+<label>Email Address</label>
+<input type="email" placeholder="you@example.com" required>
+</div>
 
-<input type="password" placeholder="Password">
+<div class="input-group">
+<label>Password</label>
+<input type="password" placeholder="Enter your password" required>
+</div>
 
-<button type="button" onclick="window.location.href='student-dashboard.html'">
+<p style="text-align:right;margin-top:10px;">
+<a href="#">Forgot Password?</a>
+</p>
+
+<button
+type="button"
+class="btn-primary"
+onclick="window.location.href='student-dashboard.html'">
 Login
 </button>
 
+<div style="margin-top:20px;">
+
+<button class="btn-primary" style="background:#fff;border:1px solid #ddd;">
+Continue with Google
+</button>
+
+</div>
+
 </form>
 
-<p>
+<p style="margin-top:20px;text-align:center;">
 Don't have an account?
 <a href="signup.html">Sign Up</a>
 </p>
 
 </div>
 
+</div>
+
+</div>
+
 </body>
 </html>
+
