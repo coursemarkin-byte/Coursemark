@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Become an Instructor</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav>
+<div class="logo">CourseMark</div>
+
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="courses.html">Courses</a></li>
+<li><a href="instructors.html">Instructors</a></li>
+<li><a href="login.html">Login</a></li>
+</ul>
+</nav>
+
+<section class="instructor-form instructor-onboarding">
+
+<p class="eyebrow">Instructor onboarding</p>
+<h1>Apply to Teach on CourseMark</h1>
+
+<p>
+Complete the application for profile, document, and course verification.
+</p>
+
+<div class="onboarding-shell">
+
+<div class="onboarding-progress" aria-label="Instructor onboarding progress">
+<div class="progress-track"><span style="width:16.6%"></span></div>
+<ol>
+<li class="active">Personal</li>
+<li>Professional</li>
+<li>Verification</li>
+<li>Profile</li>
+<li>Course</li>
+<li>Submit</li>
+</ol>
+</div>
+
+<form id="instructorOnboardingForm" class="multi-step-form">
+
+<div class="form-step active" data-step="1">
+<h2>Personal Information</h2>
+<div class="form-grid">
+<label>Full Name<input name="Full Name" type="text" placeholder="Anjali Nair" required></label>
+<label>Email Address<input name="Email Address" type="email" placeholder="name@example.com" required></label>
+<label>Phone Number<input name="Phone Number" type="tel" placeholder="+91 98765 43210" required></label>
+<label>District / Location<input name="District / Location" type="text" placeholder="Kochi, Ernakulam" required></label>
+<label class="full">Profile Photo Upload<input name="Profile Photo" type="file" accept=".jpg,.jpeg,.png"></label>
+</div>
+</div>
+
+<div class="form-step" data-step="2">
+<h2>Professional Details</h2>
+<div class="form-grid">
+<label>Highest Qualification<input name="Highest Qualification" type="text" placeholder="B.Sc Hotel Management"></label>
+<label>Current Occupation<input name="Current Occupation" type="text" placeholder="Chef / Trainer / Artist"></label>
+<label>Years of Teaching Experience<input name="Years of Teaching Experience" type="text" placeholder="5 years"></label>
+<label>Languages Taught<input name="Languages Taught" type="text" placeholder="Malayalam, English"></label>
+<label class="full">Areas of Expertise<textarea name="Areas of Expertise" placeholder="Kerala cooking, Malabar dishes, traditional snacks"></textarea></label>
+</div>
+</div>
+
+<div class="form-step" data-step="3">
+<h2>Verification</h2>
+<p class="trust-note">Verification helps maintain trust and quality on CourseMark.</p>
+<div class="form-grid">
+<label>Government ID Proof<input name="Government ID Proof" type="file" accept=".pdf,.jpg,.jpeg,.png"></label>
+<label>Educational Certificates<input name="Educational Certificates" type="file" accept=".pdf,.jpg,.jpeg,.png"></label>
+<label class="full">Experience Certificate (Optional)<input name="Experience Certificate" type="file" accept=".pdf,.jpg,.jpeg,.png"></label>
+</div>
+</div>
+
+<div class="form-step" data-step="4">
+<h2>Instructor Profile</h2>
+<div class="form-grid">
+<label>Professional Headline<input name="Professional Headline" type="text" placeholder="Kerala cooking expert with 10+ years experience"></label>
+<label>LinkedIn Profile (Optional)<input name="LinkedIn Profile" type="url" placeholder="https://linkedin.com/in/..."></label>
+<label>Website / Portfolio (Optional)<input name="Website / Portfolio" type="url" placeholder="https://..."></label>
+<label class="full">Short Bio / About Me<textarea name="Short Bio / About Me" placeholder="Tell students who you are and why they should learn from you"></textarea></label>
+<label class="full">Teaching Style<textarea name="Teaching Style" placeholder="Practical, beginner-friendly, demonstration based"></textarea></label>
+</div>
+</div>
+
+<div class="form-step" data-step="5">
+<h2>Create First Course</h2>
+<div class="form-grid">
+<label>Course Title<input name="Course Title" type="text" placeholder="Kerala Cooking Masterclass"></label>
+<label>Course Category<select name="Course Category">
+<option>Cooking</option>
+<option>Fitness</option>
+<option>Art & Craft</option>
+<option>Music</option>
+<option>Business</option>
+<option>Language</option>
+</select></label>
+<label>Course Level<select name="Course Level">
+<option>Beginner</option>
+<option>Intermediate</option>
+<option>Advanced</option>
+</select></label>
+<label>Course Duration<input name="Course Duration" type="text" placeholder="4 weeks / 6 hours"></label>
+<label>Course Mode<select name="Course Mode">
+<option>Online</option>
+<option>Offline</option>
+<option>Hybrid</option>
+</select></label>
+<label class="full">Course Description<textarea name="Course Description" placeholder="Describe what students will learn"></textarea></label>
+<label>Course Thumbnail<input name="Course Thumbnail" type="file" accept=".jpg,.jpeg,.png"></label>
+<label>Introductory Video (Optional)<input name="Introductory Video" type="file" accept="video/*"></label>
+</div>
+</div>
+
+<div class="form-step" data-step="6">
+<h2>Review & Submit</h2>
+<div id="applicationSummary" class="review-summary"></div>
+<label class="check-row"><input name="Terms Agreement" type="checkbox" required> I agree to the Terms & Conditions</label>
+<label class="check-row"><input name="Guidelines Agreement" type="checkbox" required> I agree to the CourseMark Instructor Guidelines</label>
+</div>
+
+<div class="success-state" id="onboardingSuccess" hidden>
+<h2>Application Submitted</h2>
+<strong>Status: Pending Verification</strong>
+<p>Our team will review your profile and notify you after approval.</p>
+</div>
+
+<div class="form-actions">
+<button type="button" class="secondary-btn" data-prev>Back</button>
+<button type="button" data-next>Continue</button>
+<button type="submit" data-submit hidden>Submit Application</button>
+</div>
+
+</form>
+</div>
+
+</section>
+
+<script src="js/onboarding.js"></script>
+
+</body>
+</html>
