@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enroll | CourseMark</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="index.html" class="logo">CourseMark</a>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="courses.html">Courses</a></li>
+        <li><a href="login.html">Login</a></li>
+      </ul>
+    </nav>
+
+    <section class="auth-wrapper" style="padding: 4rem 1.5rem">
+      <div
+        class="auth-card"
+        style="max-width: 560px; margin: 0 auto; padding: 2.5rem"
+      >
+        <h1>Request Enrollment</h1>
+        <p style="margin-bottom: 1.5rem; color: #475569">
+          Submit your details and we will confirm your enrollment for the
+          course.
+        </p>
+
+        <form id="enrollmentForm">
+          <div class="input-group">
+            <label>Full Name</label>
+            <input type="text" name="name" placeholder="Your name" required />
+          </div>
+
+          <div class="input-group">
+            <label>Email Address</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <label>Phone Number</label>
+            <input
+              type="tel"
+              name="phone"
+              placeholder="+91 98765 43210"
+              required
+            />
+          </div>
+
+          <div class="input-group">
+            <label>Course</label>
+            <input
+              type="text"
+              name="course"
+              value="Kerala Cooking Masterclass"
+              readonly
+            />
+          </div>
+
+          <button type="submit" class="btn-primary" style="width: 100%">
+            Submit Enrollment Request
+          </button>
+        </form>
+
+        <p
+          id="enrollMessage"
+          style="
+            margin-top: 1rem;
+            display: none;
+            color: #16a34a;
+            font-weight: 700;
+          "
+        ></p>
+
+        <p style="margin-top: 1rem">
+          <a
+            href="course-details.html"
+            style="color: #0f1724; font-weight: 700; text-decoration: none"
+          >
+            ← Back to course details
+          </a>
+        </p>
+
+        <p style="margin-top: 1.25rem; color: #64748b; font-size: 0.95rem">
+          After submission, your request will be recorded for admin approval.
+        </p>
+      </div>
+    </section>
+
+    <script>
+      const enrollmentForm = document.getElementById("enrollmentForm");
+      const enrollMessage = document.getElementById("enrollMessage");
+
+      enrollmentForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        try {
+          localStorage.setItem("enrolled_KeralaCookingMasterclass", "true");
+        } catch (e) {
+          // ignore storage errors
+        }
+        // Redirect back to course details and mark enrolled
+        window.location.href = "course-details.html?enrolled=1";
+      });
+    </script>
+  </body>
+</html>

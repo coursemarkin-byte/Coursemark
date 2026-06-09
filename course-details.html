@@ -1,112 +1,221 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Course Details</title>
-<link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Details</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="index.html" class="logo">CourseMark</a>
 
-<nav>
-    <a href="index.html" class="logo">CourseMark</a>
-
-    <ul>
+      <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="courses.html">Courses</a></li>
-        <li><a href="login.html">Login</a></li>
-    </ul>
-</nav>
+      </ul>
+    </nav>
 
-<section class="course-details">
+    <section class="course-details">
+      <div class="left">
+        <div class="lesson-player">
+          <video
+            id="coursePlayer"
+            controls
+            poster="https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=1200&q=80"
+          >
+            <source
+              src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support video playback.
+          </video>
+          <div class="player-meta">
+            <span>Recorded lesson preview</span>
+            <span>Watch on CourseMark</span>
+          </div>
+        </div>
 
-<div class="left">
+        <h2>Kerala Cooking Masterclass</h2>
+        <div class="course-meta">
+          <span>⭐ 4.9 Rating</span>
+          <span>👨‍🎓 1,250 Students</span>
+          <span>🏆 Bestseller</span>
+        </div>
+        <p>
+          Learn authentic Kerala recipes with a complete library of recorded
+          lessons. This course covers breakfast, lunch, dinner, snacks, and
+          traditional festival dishes. CourseMark uploads and manages all
+          videos, so enrolled students can watch them anytime with lifetime
+          access.
+        </p>
 
-<div class="lesson-player">
-<video controls poster="https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=1200&q=80">
-<source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
-Your browser does not support video playback.
-</video>
-<div class="player-meta">
-<span>Recorded lesson preview</span>
-<span>Watch on CourseMark</span>
-</div>
-</div>
+        <div class="course-highlights">
+          <div>
+            <strong>18</strong>
+            <span>Recorded lessons</span>
+          </div>
+          <div>
+            <strong>4h 20m</strong>
+            <span>Total video</span>
+          </div>
+          <div>
+            <strong>Lifetime</strong>
+            <span>Course access</span>
+          </div>
+        </div>
 
-<h2>Kerala Cooking Masterclass</h2>
-<div class="course-meta">
-    <span>⭐ 4.9 Rating</span>
-    <span>👨‍🎓 1,250 Students</span>
-    <span>🏆 Bestseller</span>
-</div>
-<p>
-Learn authentic Kerala recipes from expert chefs.
-This course covers breakfast, lunch, dinner,
-snacks, and traditional festival dishes.
-The instructor uploads recorded video lessons, and enrolled students can
-watch them here anytime with lifetime access.
-</p>
+        <h3>What You Will Learn</h3>
+        <ul>
+          <li>Traditional Kerala Recipes</li>
+          <li>Malabar Cuisine</li>
+          <li>Kerala Snacks</li>
+          <li>Festival Special Foods</li>
+          <li>Professional Cooking Tips</li>
+        </ul>
+      </div>
 
-<div class="course-highlights">
-<div>
-<strong>18</strong>
-<span>Recorded lessons</span>
-</div>
-<div>
-<strong>4h 20m</strong>
-<span>Total video</span>
-</div>
-<div>
-<strong>Lifetime</strong>
-<span>Course access</span>
-</div>
-</div>
+      <div class="right">
+        <div class="price-box">
+          <h2>Rs. 999</h2>
 
-<h3>What You Will Learn</h3>
-<h3>Instructor</h3>
+          <p>Lifetime Access</p>
+          <div class="countdown-box">
+            <span>Early learner offer ends in</span>
+            <strong>02 days : 14 hours</strong>
+          </div>
+          <ul>
+            <li>Watch recorded lessons anytime</li>
+            <li>Access from mobile and desktop</li>
+            <li>Completion certificate included</li>
+          </ul>
 
-<div class="instructor-card">
-    <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Instructor">
-    <h3>Anjali Nair</h3>
-    <p>Professional Chef • 10+ Years Experience</p>
-</div>
-<ul>
-<li>Traditional Kerala Recipes</li>
-<li>Malabar Cuisine</li>
-<li>Kerala Snacks</li>
-<li>Festival Special Foods</li>
-<li>Professional Cooking Tips</li>
-</ul>
+          <a href="checkout.html" class="price-action-link btn-primary"
+            >Enroll Now</a
+          >
+        </div>
+      </div>
+    </section>
 
-</div>
+    <script>
+      (function () {
+        console.debug("[enroll] init script");
+        const courseKey = "enrolled_KeralaMasterclass";
+        const enrollLink = document.querySelector(".price-action-link");
+        const player = document.getElementById("coursePlayer");
 
-<div class="right">
+        function setEnrolledUI() {
+          console.debug("[enroll] setEnrolledUI");
+          if (!enrollLink) return;
+          enrollLink.classList.add("enrolled");
+          enrollLink.textContent = "Enrolled — Start Course";
+          enrollLink.href = "#coursePlayer";
+          enrollLink.style.background = "#16a34a";
+          enrollLink.style.color = "#ffffff";
+          enrollLink.style.padding = "10px 14px";
+          enrollLink.style.borderRadius = "8px";
+          enrollLink.style.display = "inline-block";
+        }
 
-<div class="price-box">
+        function removeStartButton() {
+          const existing = document.getElementById("startCourseBtn");
+          if (existing) existing.remove();
+        }
 
-<h2>Rs. 999</h2>
+        function createStartButton() {
+          console.debug("[enroll] createStartButton");
+          removeStartButton();
+          const btn = document.createElement("button");
+          btn.id = "startCourseBtn";
+          btn.textContent = "Start Course";
+          btn.style.display = "block";
+          btn.style.margin = "12px 0";
+          btn.style.background = "#16a34a";
+          btn.style.color = "#fff";
+          btn.style.border = "none";
+          btn.style.padding = "10px 14px";
+          btn.style.borderRadius = "8px";
+          btn.style.cursor = "pointer";
+          btn.addEventListener("click", function () {
+            console.debug("[enroll] start button clicked");
+            if (!player) return;
+            player.play().catch(function (err) {
+              console.warn(
+                "[enroll] player.play() rejected on start button click",
+                err,
+              );
+              player.focus();
+            });
+            removeStartButton();
+          });
 
-<p>Lifetime Access</p>
-<div class="countdown-box">
-<span>Early learner offer ends in</span>
-<strong>02 days : 14 hours</strong>
-</div>
-<ul>
-<li>Watch recorded lessons anytime</li>
-<li>Access from mobile and desktop</li>
-<li>Completion certificate included</li>
-</ul>
+          if (player && player.parentNode) {
+            player.parentNode.insertBefore(btn, player.nextSibling);
+          } else if (player) {
+            player.insertAdjacentElement("afterend", btn);
+          }
+        }
 
-<button onclick="window.location.href='checkout.html'">
-    Enroll Now
-</button>
+        function goToPlayer(allowAutoplay = true) {
+          console.debug("[enroll] goToPlayer", { allowAutoplay });
+          if (player) {
+            player.scrollIntoView({ behavior: "smooth" });
+            if (!allowAutoplay) {
+              createStartButton();
+              return;
+            }
+            console.debug("[enroll] attempting player.play()");
+            player
+              .play()
+              .then(() => {
+                console.debug("[enroll] player.play() succeeded");
+                removeStartButton();
+              })
+              .catch((err) => {
+                console.warn("[enroll] player.play() rejected", err);
+                createStartButton();
+              });
+          }
+        }
 
-</div>
+        function onEnrollClick(e) {
+          console.debug("[enroll] enroll link clicked");
+          e.preventDefault();
+          try {
+            localStorage.setItem(courseKey, "true");
+            console.debug("[enroll] localStorage set");
+          } catch (err) {
+            console.warn("[enroll] localStorage set failed", err);
+          }
+          setEnrolledUI();
+          goToPlayer(true);
+        }
 
-</div>
+        if (localStorage.getItem(courseKey)) {
+          console.debug("[enroll] found enrolled flag in localStorage");
+          setEnrolledUI();
+        }
 
-</section>
+        if (enrollLink) {
+          enrollLink.addEventListener("click", onEnrollClick);
+        }
 
-</body>
+        if (location.search.indexOf("enrolled=1") !== -1) {
+          console.debug("[enroll] detected enrolled=1 in querystring");
+          try {
+            localStorage.setItem(courseKey, "true");
+          } catch (e) {
+            console.warn(
+              "[enroll] localStorage set failed on query redirect",
+              e,
+            );
+          }
+          setTimeout(() => {
+            setEnrolledUI();
+            goToPlayer(false);
+          }, 200);
+        }
+      })();
+    </script>
+  </body>
 </html>
-

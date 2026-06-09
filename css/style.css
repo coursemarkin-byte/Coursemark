@@ -659,77 +659,6 @@ section > p {
 }
 
 /* ── ════════════════════════════════════════════════════════
-   FEATURED INSTRUCTORS
-   ══════════════════════════════════════════════════════════ */
-.featured-instructors { background: var(--clr-white); }
-
-.instructor-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: var(--space-md);
-  max-width: var(--max-w);
-  margin-inline: auto;
-}
-
-.instructor-card {
-  background: var(--clr-white);
-  border: 1px solid var(--clr-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-md);
-  text-align: center;
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
-}
-
-.instructor-card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-3px);
-}
-
-.instructor-card img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-inline: auto;
-  margin-bottom: var(--space-sm);
-  border: 3px solid var(--clr-amber-pale);
-  box-shadow: 0 0 0 2px var(--clr-amber);
-}
-
-.instructor-card h3 {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--clr-navy);
-  margin-bottom: 2px;
-}
-
-.instructor-card p {
-  font-size: 0.82rem;
-  color: var(--clr-muted);
-  line-height: 1.5;
-}
-
-.instructor-card button {
-  margin-top: var(--space-sm);
-  width: 100%;
-  padding: 9px;
-  font-size: 0.83rem;
-  font-weight: 600;
-  background: transparent;
-  color: var(--clr-navy);
-  border: 1.5px solid var(--clr-navy);
-  border-radius: var(--radius-sm);
-  transition: all var(--dur) var(--ease);
-}
-
-.instructor-card button:hover {
-  background: var(--clr-navy);
-  color: var(--clr-white);
-}
-
-/* ── ════════════════════════════════════════════════════════
    SKILLS / CATEGORY GRID
    ══════════════════════════════════════════════════════════ */
 .skills { background: var(--clr-offwhite); }
@@ -765,50 +694,6 @@ section > p {
   transform: translateY(-2px);
 }
 
-/* ── ════════════════════════════════════════════════════════
-   BECOME INSTRUCTOR CTA
-   ══════════════════════════════════════════════════════════ */
-.become-instructor {
-  background:
-    linear-gradient(135deg, var(--clr-amber) 0%, #f97316 100%);
-  text-align: center;
-  padding: var(--space-xl) var(--space-md);
-}
-
-.become-instructor h2 {
-  font-family: var(--font-display);
-  font-size: clamp(1.6rem, 3.5vw, 2.5rem);
-  font-weight: 800;
-  color: var(--clr-navy) !important;
-  letter-spacing: -.03em;
-  margin-bottom: var(--space-xs);
-}
-
-.become-instructor p {
-  font-size: 1.05rem;
-  color: rgba(15,23,36,.65) !important;
-  margin-bottom: var(--space-lg);
-}
-
-.become-instructor a { display: inline-block; }
-
-.become-instructor button {
-  font-size: 0.95rem;
-  font-weight: 700;
-  padding: 14px 36px;
-  border: none;
-  border-radius: var(--radius-pill);
-  background: var(--clr-navy);
-  color: var(--clr-white);
-  box-shadow: 0 4px 20px rgba(15,23,36,.3);
-  transition: all var(--dur) var(--ease);
-}
-
-.become-instructor button:hover {
-  background: var(--clr-navy-soft);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(15,23,36,.35);
-}
 
 /* ── ════════════════════════════════════════════════════════
    FOOTER (add a footer in index.html if desired)

@@ -1,340 +1,641 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CourseMark</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap"
+      rel="stylesheet"
+    />
 
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+      /* ── Differentiators ── */
+      .differentiators {
+        background: var(--clr-offwhite);
+        padding: var(--space-2xl) var(--space-md);
+      }
+      .diff-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: var(--space-md);
+        max-width: var(--max-w);
+        margin-inline: auto;
+      }
+      .diff-card {
+        background: var(--clr-white);
+        border: 1px solid var(--clr-border);
+        border-radius: var(--radius-md);
+        padding: var(--space-md);
+        border-top: 3px solid var(--clr-amber);
+        box-shadow: var(--shadow-sm);
+        transition:
+          transform var(--dur) var(--ease),
+          box-shadow var(--dur) var(--ease);
+      }
+      .diff-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-md);
+      }
+      .diff-icon {
+        font-size: 1.8rem;
+        margin-bottom: var(--space-xs);
+      }
+      .diff-card h3 {
+        font-family: var(--font-display);
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--clr-navy);
+        margin-bottom: 8px;
+      }
+      .diff-card p {
+        font-size: 0.875rem;
+        color: var(--clr-text-light);
+        line-height: 1.6;
+      }
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
+      /* ── Big Statement ── */
+      .big-statement {
+        background:
+          radial-gradient(
+            ellipse 70% 80% at 20% 50%,
+            rgba(245, 158, 11, 0.15) 0%,
+            transparent 60%
+          ),
+          var(--clr-navy);
+        color: var(--clr-white);
+        padding: var(--space-2xl) var(--space-md);
+        text-align: center;
+      }
+      .big-statement h2 {
+        font-family: var(--font-display);
+        font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        max-width: 800px;
+        margin-inline: auto;
+        margin-bottom: var(--space-sm);
+        color: var(--clr-white) !important;
+        line-height: 1.35;
+      }
+      .big-statement h2 span {
+        color: var(--clr-amber);
+      }
+      .big-statement p {
+        color: rgba(255, 255, 255, 0.65) !important;
+        max-width: 580px;
+        margin-inline: auto;
+        font-size: 1.05rem;
+      }
 
-<nav>
-    <a href="index.html" class="logo">CourseMark</a>
+      /* ── Kerala Arts ── */
+      .kerala-arts {
+        background: var(--clr-navy-mid);
+        padding: var(--space-2xl) var(--space-md);
+        text-align: center;
+      }
+      .kerala-arts h2 {
+        color: var(--clr-white) !important;
+      }
+      .kerala-arts > p {
+        color: rgba(255, 255, 255, 0.6) !important;
+      }
+      .arts-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+        max-width: 820px;
+        margin-inline: auto;
+        margin-top: var(--space-lg);
+      }
+      .art-tag {
+        background: rgba(245, 158, 11, 0.12);
+        border: 1.5px solid rgba(245, 158, 11, 0.35);
+        color: var(--clr-amber-light);
+        padding: 10px 22px;
+        border-radius: var(--radius-pill);
+        font-size: 0.9rem;
+        font-weight: 600;
+        font-family: var(--font-display);
+        transition: all var(--dur) var(--ease);
+      }
+      .art-tag:hover {
+        background: rgba(245, 158, 11, 0.22);
+        border-color: var(--clr-amber);
+      }
+      .arts-note {
+        margin-top: var(--space-md);
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 0.85rem;
+        font-style: italic;
+      }
 
-    <ul>
+      /* ── Comparison Table ── */
+      .comparison {
+        background: var(--clr-white);
+        padding: var(--space-2xl) var(--space-md);
+      }
+      .table-wrap {
+        overflow-x: auto;
+        max-width: var(--max-w);
+        margin-inline: auto;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--clr-border);
+      }
+      .comparison table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+      }
+      .comparison thead tr {
+        background: var(--clr-navy);
+        color: var(--clr-white);
+      }
+      .comparison thead th {
+        padding: 16px 18px;
+        text-align: left;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 0.82rem;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+      }
+      .comparison thead th:last-child {
+        background: var(--clr-amber);
+        color: var(--clr-navy);
+      }
+      .comparison tbody tr:nth-child(even) {
+        background: var(--clr-offwhite);
+      }
+      .comparison tbody tr:hover {
+        background: var(--clr-amber-pale);
+      }
+      .comparison td {
+        padding: 13px 18px;
+        border-bottom: 1px solid var(--clr-border);
+        color: var(--clr-text-light);
+        font-size: 0.875rem;
+      }
+      .comparison td:first-child {
+        font-weight: 600;
+        color: var(--clr-navy);
+      }
+      .comparison td:last-child {
+        font-weight: 700;
+        color: #16a34a;
+      }
+      .tick {
+        color: #16a34a;
+        font-weight: 700;
+      }
+      .cross {
+        color: #e74c3c;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="index.html" class="logo">CourseMark</a>
+      <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="courses.html">Courses</a></li>
-        <li><a href="instructors.html">Instructors</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="become-instructor.html">Become Instructor</a></li>
-    </ul>
-   
-    <a href="login.html" class="login-btn">Login</a>
-</nav>
-
-<section class="hero">
-
-<p class="eyebrow">Trusted skill learning</p>
-
-<h1>Learn practical skills with trusted guidance.</h1>
-
-<p>
-Access focused courses, verified instructors, and recorded lessons designed for real progress.
-</p>
-
-<form class="search-panel">
-<input type="search" placeholder="Search courses, skills, or instructors">
-<button type="submit">Search</button>
-</form>
-
-<div class="quick-topics">
-<a href="courses.html">Business</a>
-<a href="courses.html">Wellness</a>
-<a href="courses.html">Cooking</a>
-<a href="courses.html">Art</a>
-<a href="courses.html">Marketing</a>
-</div>
-
-<a href="courses.html">
-<button>Explore Courses</button>
-</a>
-
-<a href="instructors.html">
-<button>Meet Instructors</button>
-</a>
-
-</section>
-
-<section class="stats">
-
-<div>
-<h2>25+</h2>
-<p>Trusted Instructors</p>
-</div>
-
-<div>
-<h2>100+</h2>
-<p>Learners</p>
-</div>
-
-<div>
-<h2>25+</h2>
-<p>Courses</p>
-</div>
-
-<div>
-<h2>5+</h2>
-<p>Skill Categories</p>
-</div>
-
-</section>
-
-<section class="course-showcase">
-
-<h2>Featured Courses</h2>
-<p>Focused lessons with clear outcomes and lifetime access.</p>
-
-<div class="category-tabs">
-<button>Popular</button>
-<button>Beginner</button>
-<button>Career</button>
-<button>Wellness</button>
-<button>Creative</button>
-</div>
-
-<div class="course-grid">
-
-<div class="course-card">
-    <span class="badge">Learner favorite</span>
-    <img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=700&q=80" alt="Kerala Cooking Masterclass">
-    <h3>Kerala Cooking Masterclass</h3>
-    <p>Anjali Nair | Kochi</p>
-    <p>Recipes, festive dishes, and core techniques.</p>
-    <div class="course-meta">
-    <span>4.9 rating</span>
-    <span>Beginner</span>
-    <span>18 lessons</span>
-    </div>
-    <h4>Rs. 999</h4>
-    <a href="course-details.html"><button>View Course</button></a>
-</div>
-
-<div class="course-card">
-    <span class="badge">Beginner friendly</span>
-    <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=700&q=80" alt="Yoga for Beginners">
-    <h3>Yoga for Beginners</h3>
-    <p>Arun Kumar | Thrissur</p>
-    <p>Simple daily routines for better wellness.</p>
-    <div class="course-meta">
-    <span>4.8 rating</span>
-    <span>Beginner</span>
-    <span>12 lessons</span>
-    </div>
-    <h4>Rs. 799</h4>
-    <button>View Course</button>
-</div>
-
-<div class="course-card">
-    <span class="badge">Career skill</span>
-    <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=700&q=80" alt="Digital Marketing">
-    <h3>Digital Marketing for Small Business</h3>
-    <p>Meera Joseph | Calicut</p>
-    <p>Ads, content, and growth basics.</p>
-    <div class="course-meta">
-    <span>4.7 rating</span>
-    <span>Intermediate</span>
-    <span>Certificate</span>
-    </div>
-    <h4>Rs. 1499</h4>
-    <button>View Course</button>
-</div>
-
-</div>
-
-</section>
-
-<section class="why-coursemark">
-
-<h2>Why CourseMark</h2>
-
-<div class="steps">
-
-<div class="step">
-<h3>Easy access</h3>
-<p>
-Find relevant courses quickly.
-</p>
-</div>
-
-<div class="step">
-<h3>Practical learning</h3>
-<p>
-Learn from experienced practitioners.
-</p>
-</div>
-
-<div class="step">
-<h3>Clear value</h3>
-<p>
-Get clear outcomes and lifetime access.
-</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="learning-paths">
-
-<h2>Learning Paths</h2>
-<p>Structured tracks for clear progress.</p>
-
-<div class="steps">
-<div class="step">
-<h3>Start</h3>
-<p>Choose a beginner-friendly course.</p>
-</div>
-<div class="step">
-<h3>Practice</h3>
-<p>Watch recorded lessons and apply each skill.</p>
-</div>
-<div class="step">
-<h3>Complete</h3>
-<p>Track progress and finish with confidence.</p>
-</div>
-</div>
-
-</section>
-
-<section class="how-it-works">
-
-<h2>How It Works</h2>
-
-<div class="steps">
-
-<div class="step">
-<h3>1</h3>
-<p>Instructors apply</p>
-</div>
-
-<div class="step">
-<h3>2</h3>
-<p>Courses are verified</p>
-</div>
-
-<div class="step">
-<h3>3</h3>
-<p>Students enroll</p>
-</div>
-
-<div class="step">
-<h3>4</h3>
-<p>Learning begins</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="impact">
-
-<h2>Trusted Learning, Built Simply</h2>
-
-<p>
-CourseMark connects learners with verified instructors, practical courses, and accessible recorded lessons.
-</p>
-
-</section>
-
-<section class="featured-instructors">
-
-<h2>Trusted Instructors</h2>
-
-<div class="instructor-grid">
-
-<div class="instructor-card">
-    <img src="https://images.unsplash.com/photo-1580894894513-541e068a3e2b?auto=format&fit=crop&w=300&q=80" alt="Anjali Nair">
-    <h3>Anjali Nair</h3>
-    <p>Kerala Cooking Expert</p>
-    <p>120 Students</p>
-    <button>View Profile</button>
-</div>
-
-<div class="instructor-card">
-    <img src="https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?auto=format&fit=crop&w=300&q=80" alt="Arun Kumar">
-    <h3>Arun Kumar</h3>
-    <p>Yoga Trainer</p>
-    <p>85 Students</p>
-    <button>View Profile</button>
-</div>
-
-<div class="instructor-card">
-    <img src="https://images.unsplash.com/photo-1610276198568-eb6d0ff53e48?auto=format&fit=crop&w=300&q=80" alt="Fathima Ali">
-    <h3>Fathima Ali</h3>
-    <p>Mural Artist</p>
-    <p>60 Students</p>
-    <button>View Profile</button>
-</div>
-
-</div>
-
-</section>
-
-<section class="skills" id="skills">
-
-<h2>Popular Skills</h2>
-
-<div class="category-grid">
-
-<div class="card">Cooking</div>
-<div class="card">Yoga</div>
-<div class="card">Art & Craft</div>
-<div class="card">Music</div>
-<div class="card">Tailoring</div>
-<div class="card">Business</div>
-
-</div>
-
-</section>
-
-<section class="how-it-works">
-
-<h2>Start Learning</h2>
-
-<div class="steps">
-
-<div class="step">
-<h3>1</h3>
-<p>Find instructor</p>
-</div>
-
-<div class="step">
-<h3>2</h3>
-<p>Choose course</p>
-</div>
-
-<div class="step">
-<h3>3</h3>
-<p>Watch lessons</p>
-</div>
-
-<div class="step">
-<h3>4</h3>
-<p>Complete course</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="become-instructor">
-
-<h2>Teach on CourseMark</h2>
-
-<p>
-Apply, verify, and publish recorded courses.
-</p>
-
-<a href="become-instructor.html">
-<button>Become Instructor</button>
-</a>
-
-</section>
-
-</body>
+      </ul>
+      <a href="login.html" class="login-btn">Login</a>
+    </nav>
+
+    <section class="hero">
+      <p class="eyebrow">Trusted skill learning</p>
+      <h1>Learn practical skills with trusted guidance.</h1>
+      <p>
+        Access focused courses, trusted creators, and recorded lessons designed
+        for real progress.
+      </p>
+      <form class="search-panel">
+        <input
+          type="search"
+          placeholder="Search courses, skills, or creators"
+        />
+        <button type="submit">Search</button>
+      </form>
+      <div class="quick-topics">
+        <a href="courses.html">Business</a>
+        <a href="courses.html">Wellness</a>
+        <a href="courses.html">Cooking</a>
+        <a href="courses.html">Art</a>
+        <a href="courses.html">Marketing</a>
+      </div>
+      <a href="courses.html"><button>Explore Courses</button></a>
+    </section>
+
+    <section class="stats">
+      <div>
+        <h2>25+</h2>
+        <p>Trusted Creators</p>
+      </div>
+      <div>
+        <h2>100+</h2>
+        <p>Learners</p>
+      </div>
+      <div>
+        <h2>25+</h2>
+        <p>Courses</p>
+      </div>
+      <div>
+        <h2>5+</h2>
+        <p>Skill Categories</p>
+      </div>
+    </section>
+
+    <section class="course-showcase">
+      <h2>Featured Courses</h2>
+      <p>Focused lessons with clear outcomes and lifetime access.</p>
+      <div class="category-tabs">
+        <button>Popular</button>
+        <button>Beginner</button>
+        <button>Career</button>
+        <button>Wellness</button>
+        <button>Creative</button>
+      </div>
+      <div class="course-grid">
+        <div class="course-card">
+          <span class="badge">Learner favorite</span>
+          <img
+            src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=700&q=80"
+            alt="Kerala Cooking Masterclass"
+          />
+          <h3>Kerala Cooking Masterclass</h3>
+          <p>Anjali Nair | Kochi</p>
+          <p>Recipes, festive dishes, and core techniques.</p>
+          <div class="course-meta">
+            <span>4.9 rating</span>
+            <span>Beginner</span>
+            <span>18 lessons</span>
+          </div>
+          <h4>Rs. 999</h4>
+          <a href="course-details.html"><button>View Course</button></a>
+        </div>
+        <div class="course-card">
+          <span class="badge">Beginner friendly</span>
+          <img
+            src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=700&q=80"
+            alt="Yoga for Beginners"
+          />
+          <h3>Yoga for Beginners</h3>
+          <p>Arun Kumar | Thrissur</p>
+          <p>Simple daily routines for better wellness.</p>
+          <div class="course-meta">
+            <span>4.8 rating</span>
+            <span>Beginner</span>
+            <span>12 lessons</span>
+          </div>
+          <h4>Rs. 799</h4>
+          <button>View Course</button>
+        </div>
+        <div class="course-card">
+          <span class="badge">Career skill</span>
+          <img
+            src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=700&q=80"
+            alt="Digital Marketing"
+          />
+          <h3>Digital Marketing for Small Business</h3>
+          <p>Meera Joseph | Calicut</p>
+          <p>Ads, content, and growth basics.</p>
+          <div class="course-meta">
+            <span>4.7 rating</span>
+            <span>Intermediate</span>
+            <span>Certificate</span>
+          </div>
+          <h4>Rs. 1499</h4>
+          <button>View Course</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- UPDATED: Why CourseMark -->
+    <section class="why-coursemark">
+      <h2>Why CourseMark</h2>
+      <div class="steps">
+        <div class="step">
+          <h3>Malayalam First</h3>
+          <p>
+            Every creator builds courses in Malayalam that feel natural, local,
+            and easy to follow.
+          </p>
+        </div>
+        <div class="step">
+          <h3>Zero Ads — Ever</h3>
+          <p>
+            No pre-roll ads. No pop-ups. No interruptions. Every lesson plays
+            cleanly from start to finish so you can focus completely.
+          </p>
+        </div>
+        <div class="step">
+          <h3>Built for Kerala</h3>
+          <p>
+            Priced for Kerala income levels. Aligned with Kerala festivals.
+            Designed by a team of Keralites who understand your context.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW: 8 Unique Advantages -->
+    <section class="differentiators">
+      <h2>What Makes Us Different</h2>
+      <p>
+        Things no other platform offers — built specifically for Kerala learners
+        and creators.
+      </p>
+      <div class="diff-grid">
+        <div class="diff-card">
+          <div class="diff-icon">🗣️</div>
+          <h3>Malayalam First</h3>
+          <p>
+            The only skill course platform where Malayalam is the primary
+            language — not an afterthought. Creators teach naturally in their
+            mother tongue.
+          </p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-icon">🌿</div>
+          <h3>Kerala Cultural Authenticity</h3>
+          <p>
+            A Sadhya cooking course here is taught by someone who grew up making
+            Sadhya — not a generic creator who googled the recipe.
+          </p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-icon">🚫</div>
+          <h3>Zero Ads — Ever</h3>
+          <p>
+            Students watch course videos with zero advertisements. No pre-roll
+            ads, no pop-ups, no sponsored content. Fully distraction-free
+            learning.
+          </p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-icon">💬</div>
+          <h3>WhatsApp Community per Course</h3>
+          <p>
+            Every course has a dedicated WhatsApp student group. Students
+            support each other, share progress, and ask questions directly.
+          </p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-icon">📴</div>
+          <h3>Offline Download for Rural Kerala</h3>
+          <p>
+            Students in Wayanad, Idukki, and areas with weak internet can
+            download lessons and watch offline — built for Kerala's geography.
+          </p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-icon">🎊</div>
+          <h3>Festival-Aligned Learning</h3>
+          <p>
+            New courses and promotions timed with Onam, Vishu, Christmas, and
+            Eid. The right course at exactly the right time of year.
+          </p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-icon">🤝</div>
+          <h3>Personal Creator Trust</h3>
+          <p>
+            Every creator is personally known and vetted by our team — not
+            approved by an algorithm. Real Keralites review every course.
+          </p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-icon">💰</div>
+          <h3>Kerala Price Points</h3>
+          <p>
+            Courses priced between Rs 299 and Rs 3999 — aligned with Kerala
+            disposable income. Not Western pricing converted to rupees.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW: Big Statement -->
+    <section class="big-statement">
+      <h2>
+        Every existing platform treats Kerala as <span>part of</span> a bigger
+        audience.<br />We treat Kerala as <span>the entire audience.</span>
+      </h2>
+      <p>
+        That focus is our most powerful advantage. A global platform cannot
+        become a Kerala platform overnight. CourseMark was built this way from
+        day one.
+      </p>
+    </section>
+
+    <!-- NEW: Traditional Kerala Arts -->
+    <section class="kerala-arts">
+      <h2>Traditional Kerala Arts — Available Nowhere Else</h2>
+      <p>
+        Structured courses in Kerala's classical arts exist almost nowhere
+        online. CourseMark fills that void.
+      </p>
+      <div class="arts-grid">
+        <span class="art-tag">Kathakali</span>
+        <span class="art-tag">Kalaripayattu</span>
+        <span class="art-tag">Mohiniyattam</span>
+        <span class="art-tag">Kerala Mural Painting</span>
+        <span class="art-tag">Thiruvathirakali</span>
+        <span class="art-tag">Ottanthullal</span>
+        <span class="art-tag">Panchavadyam</span>
+        <span class="art-tag">Theyyam</span>
+      </div>
+      <p class="arts-note">
+        Taught properly — by real practitioners, in structured lessons, with
+        certificates.
+      </p>
+    </section>
+
+    <!-- NEW: Comparison Table -->
+    <section class="comparison">
+      <h2>How We Compare</h2>
+      <p>See exactly why CourseMark is the right choice for Kerala skills.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Udemy</th>
+              <th>YouTube</th>
+              <th>Unacademy</th>
+              <th>CourseMark</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Malayalam language</td>
+              <td><span class="cross">✗ No</span></td>
+              <td><span class="tick">✓ Some</span></td>
+              <td><span class="cross">✗ No</span></td>
+              <td><span class="tick">✓ First priority</span></td>
+            </tr>
+            <tr>
+              <td>Kerala skill courses</td>
+              <td><span class="cross">✗ Rarely</span></td>
+              <td><span class="cross">✗ Unstructured</span></td>
+              <td><span class="cross">✗ None</span></td>
+              <td><span class="tick">✓ 100% focus</span></td>
+            </tr>
+            <tr>
+              <td>Structured lessons</td>
+              <td><span class="tick">✓ Yes</span></td>
+              <td><span class="cross">✗ No order</span></td>
+              <td><span class="tick">✓ Yes</span></td>
+              <td><span class="tick">✓ Yes</span></td>
+            </tr>
+            <tr>
+              <td>Certificates</td>
+              <td><span class="tick">✓ Yes</span></td>
+              <td><span class="cross">✗ No</span></td>
+              <td><span class="tick">✓ Yes</span></td>
+              <td><span class="tick">✓ Yes</span></td>
+            </tr>
+            <tr>
+              <td>Zero ads</td>
+              <td><span class="cross">✗ Ads</span></td>
+              <td><span class="cross">✗ Constant ads</span></td>
+              <td><span class="cross">✗ Ads</span></td>
+              <td><span class="tick">✓ Always ad-free</span></td>
+            </tr>
+            <tr>
+              <td>UPI & GPay payment</td>
+              <td><span class="cross">✗ No</span></td>
+              <td>N/A</td>
+              <td><span class="tick">✓ Yes</span></td>
+              <td><span class="tick">✓ Yes</span></td>
+            </tr>
+            <tr>
+              <td>Traditional Kerala arts</td>
+              <td><span class="cross">✗ No</span></td>
+              <td><span class="cross">✗ Partial</span></td>
+              <td><span class="cross">✗ No</span></td>
+              <td><span class="tick">✓ Unique</span></td>
+            </tr>
+            <tr>
+              <td>WhatsApp community</td>
+              <td><span class="cross">✗ No</span></td>
+              <td><span class="cross">✗ No</span></td>
+              <td><span class="cross">✗ No</span></td>
+              <td><span class="tick">✓ Every course</span></td>
+            </tr>
+            <tr>
+              <td>Offline download</td>
+              <td><span class="tick">✓ App only</span></td>
+              <td><span class="tick">✓ Premium only</span></td>
+              <td><span class="tick">✓ App only</span></td>
+              <td><span class="tick">✓ Free</span></td>
+            </tr>
+            <tr>
+              <td>Kerala price points</td>
+              <td><span class="cross">✗ No</span></td>
+              <td>Free</td>
+              <td><span class="tick">✓ Yes</span></td>
+              <td><span class="tick">✓ Yes</span></td>
+            </tr>
+            <tr>
+              <td>Local instructor trust</td>
+              <td><span class="cross">✗ None</span></td>
+              <td><span class="cross">✗ None</span></td>
+              <td><span class="cross">✗ None</span></td>
+              <td><span class="tick">✓ Personal vetting</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="learning-paths">
+      <h2>Learning Paths</h2>
+      <p>Structured tracks for clear progress.</p>
+      <div class="steps">
+        <div class="step">
+          <h3>Start</h3>
+          <p>Choose a beginner-friendly course.</p>
+        </div>
+        <div class="step">
+          <h3>Practice</h3>
+          <p>Watch recorded lessons and apply each skill.</p>
+        </div>
+        <div class="step">
+          <h3>Complete</h3>
+          <p>Track progress and finish with confidence.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-it-works">
+      <h2>How It Works</h2>
+      <div class="steps">
+        <div class="step">
+          <h3>1</h3>
+          <p>Courses are curated</p>
+        </div>
+        <div class="step">
+          <h3>2</h3>
+          <p>Content is reviewed</p>
+        </div>
+        <div class="step">
+          <h3>3</h3>
+          <p>Students enroll</p>
+        </div>
+        <div class="step">
+          <h3>4</h3>
+          <p>Learning begins</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="impact">
+      <h2>Trusted Learning, Built Simply</h2>
+      <p>
+        CourseMark connects learners with verified creators, practical courses,
+        and accessible recorded lessons.
+      </p>
+    </section>
+
+    <section class="skills" id="skills">
+      <h2>Popular Skills</h2>
+      <div class="category-grid">
+        <div class="card">Cooking</div>
+        <div class="card">Yoga</div>
+        <div class="card">Art & Craft</div>
+        <div class="card">Music</div>
+        <div class="card">Tailoring</div>
+        <div class="card">Business</div>
+      </div>
+    </section>
+
+    <section class="how-it-works">
+      <h2>Start Learning</h2>
+      <div class="steps">
+        <div class="step">
+          <h3>1</h3>
+          <p>Find a course</p>
+        </div>
+        <div class="step">
+          <h3>2</h3>
+          <p>Choose course</p>
+        </div>
+        <div class="step">
+          <h3>3</h3>
+          <p>Watch lessons</p>
+        </div>
+        <div class="step">
+          <h3>4</h3>
+          <p>Complete course</p>
+        </div>
+      </div>
+    </section>
+  </body>
 </html>
-
