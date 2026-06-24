@@ -8,14 +8,15 @@
     />
     <meta name="theme-color" content="#0f1724" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create Account | CourseMark</title>
+    <title>Student Registration | CourseMark</title>
     <link rel="stylesheet" href="css/style.css" />
     <!-- Supabase JS (CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/supabase.min.js"></script>
     <script>
       // Supabase config - replace anon key with your project's public anon key
       const SUPABASE_URL = "https://foxnhxtpvwvqnkwcegje.supabase.co";
-      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZveG5oeHRwdnd2cW5rd2NlZ2plIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMDgxNTUsImV4cCI6MjA5Nzg4NDE1NX0.WrjYZzLhq5z41pFYhfdQ_yJQMxfUrAV-8PgU0ENZPEk";
+      const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZveG5oeHRwdnd2cW5rd2NlZ2plIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMDgxNTUsImV4cCI6MjA5Nzg4NDE1NX0.WrjYZzLhq5z41pFYhfdQ_yJQMxfUrAV-8PgU0ENZPEk";
       const supabaseClient = supabase.createClient(
         SUPABASE_URL,
         SUPABASE_ANON_KEY,
@@ -30,14 +31,15 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="courses.html">Courses</a></li>
       </ul>
+      <a href="signup.html" class="login-btn">Sign Up</a>
     </nav>
 
     <div class="auth-wrapper">
       <div class="auth-card">
-        <h2>Create Your Account</h2>
+        <h2>Student Registration</h2>
 
         <p class="sub">
-          Join CourseMark and start learning from trusted local creators.
+          Create a student account to browse, purchase, and access courses.
         </p>
 
         <form id="signup-form">
@@ -84,7 +86,15 @@
               required
             />
           </div>
-          <button type="submit" class="btn-primary">Create Account</button>
+
+          <button
+            id="signup-btn"
+            type="submit"
+            class="btn-primary"
+            style="display: block; width: 100%; padding: 12px 20px"
+          >
+            Sign Up
+          </button>
         </form>
 
         <div style="margin-top: 20px; text-align: center">
@@ -133,6 +143,14 @@
               const { data, error } = await supabaseClient.auth.signUp({
                 email,
                 password,
+                options: {
+                  data: {
+                    full_name: document
+                      .getElementById("full-name")
+                      .value.trim(),
+                    account_type: "student",
+                  },
+                },
               });
               if (error) {
                 signupMsg.textContent = error.message || "Signup error";

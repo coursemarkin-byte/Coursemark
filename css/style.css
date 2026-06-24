@@ -161,6 +161,29 @@ nav ul li a:hover {
   box-shadow: var(--shadow-amber);
 }
 
+.nav-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.nav-actions .login-btn {
+  margin-left: 0;
+}
+
+.nav-login-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--clr-white);
+  padding: 8px 10px;
+}
+
+.nav-login-link:hover {
+  color: var(--clr-amber);
+}
+
 /* ── ════════════════════════════════════════════════════════
    HERO
    ══════════════════════════════════════════════════════════ */
@@ -985,6 +1008,11 @@ footer .footer-bottom {
   }
 
   .login-btn {
+    margin-left: 0;
+    justify-self: end;
+  }
+
+  .nav-actions {
     margin-left: 0;
     justify-self: end;
   }
