@@ -5,6 +5,15 @@
 <title>Student Dashboard</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
+<!-- Supabase JS (CDN) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/supabase.min.js"></script>
+<script>
+	// Supabase config - replace anon key with your project's public anon key
+	const SUPABASE_URL = 'https://foxnhxtpvwvqnkwcegje.supabase.co';
+	const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZveG5oeHRwdnd2cW5rd2NlZ2plIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMDgxNTUsImV4cCI6MjA5Nzg4NDE1NX0.WrjYZzLhq5z41pFYhfdQ_yJQMxfUrAV-8PgU0ENZPEk';
+	const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+</script>
+</head>
 <body>
 
 <nav>
@@ -19,7 +28,7 @@
 
 <section class="dashboard">
 
-<h1>Welcome, Safvan</h1>
+<h1 id="welcome-name">Welcome</h1>
 <p class="dashboard-lead">Continue watching your recorded courses. Your enrolled lessons stay available with lifetime access.</p>
 
 <div class="dashboard-cards">
@@ -64,6 +73,38 @@
 </div>
 
 </section>
+
+<script>
+	// Redirect to login if no active session
+	(async function checkSession() {
+		try {
+			const { data } = await supabaseClient.auth.getSession();
+			const session = data?.session;
+			if (!session) {
+				window.location.href = 'login.html';
+				return;
+			}
+
+			const user = session.user;
+			// Try to fetch profile to show the full name
+			try {
+				const { data: profileData, error: profileErr } = await supabaseClient
+					.from('profiles')
+					.select('full_name')
+					.eq('id', user.id)
+					.single();
+				const fullName = profileData?.full_name;
+				const welcome = document.getElementById('welcome-name');
+				if (welcome) welcome.textContent = `Welcome, ${fullName || user.email || 'Student'}`;
+			} catch (err) {
+				console.warn('Profile fetch error', err);
+			}
+		} catch (err) {
+			console.error('Session check failed', err);
+			window.location.href = 'login.html';
+		}
+	})();
+</script>
 
 </body>
 </html>

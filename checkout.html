@@ -24,7 +24,8 @@
         <h1>Request Enrollment</h1>
         <p style="margin-bottom: 1.5rem; color: #475569">
           Submit your details and we will confirm your enrollment for the
-          course.
+          course. No payment is required now — payment will be collected
+          manually after your request is approved.
         </p>
 
         <form id="enrollmentForm">
@@ -88,7 +89,8 @@
         </p>
 
         <p style="margin-top: 1.25rem; color: #64748b; font-size: 0.95rem">
-          After submission, your request will be recorded for admin approval.
+          After submission, your request will be recorded for admin approval. An
+          administrator will contact you with payment instructions if required.
         </p>
       </div>
     </section>
@@ -104,8 +106,15 @@
         } catch (e) {
           // ignore storage errors
         }
-        // Redirect back to course details and mark enrolled
-        window.location.href = "course-details.html?enrolled=1";
+
+        enrollMessage.style.display = "block";
+        enrollMessage.textContent =
+          "Request submitted — an administrator will review and contact you for payment if needed.";
+
+        // Redirect back to course details after a short pause
+        setTimeout(() => {
+          window.location.href = "course-details.html?enrolled=1";
+        }, 1500);
       });
     </script>
   </body>

@@ -4,6 +4,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login | CourseMark</title>
 <link rel="stylesheet" href="css/style.css">
+	<!-- Supabase JS (CDN) -->
+	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/supabase.min.js"></script>
+	<script>
+		// Supabase config - replace anon key with your project's public anon key
+		const SUPABASE_URL = 'https://foxnhxtpvwvqnkwcegje.supabase.co';
+		const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZveG5oeHRwdnd2cW5rd2NlZ2plIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMDgxNTUsImV4cCI6MjA5Nzg4NDE1NX0.WrjYZzLhq5z41pFYhfdQ_yJQMxfUrAV-8PgU0ENZPEk';
+		const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+	</script>
 </head>
 <body>
 
@@ -24,38 +32,73 @@
 Login to continue learning with CourseMark.
 </p>
 
-<form>
+<form id="login-form">
 
 <div class="input-group">
-<label>Email Address</label>
-<input type="email" placeholder="you@example.com" required>
+<label for="email">Email Address</label>
+<input id="email" name="email" type="email" placeholder="you@example.com" required>
 </div>
 
 <div class="input-group">
-<label>Password</label>
-<input type="password" placeholder="Enter your password" required>
+<label for="password">Password</label>
+<input id="password" name="password" type="password" placeholder="Enter your password" required>
 </div>
 
 <p style="text-align:right;margin-top:10px;">
 <a href="#">Forgot Password?</a>
 </p>
 
-<button
-type="button"
-class="btn-primary"
-onclick="window.location.href='student-dashboard.html'">
-Login
-</button>
+<button type="submit" class="btn-primary">Login</button>
 
 <div style="margin-top:20px;">
 
-<button class="btn-primary" style="background:#fff;border:1px solid #ddd;">
-Continue with Google
-</button>
+<button id="google-btn" class="btn-primary" style="background:#fff;border:1px solid #ddd;">Continue with Google</button>
 
 </div>
 
 </form>
+
+<p id="login-message" role="status" style="text-align:center;margin-top:12px;color:#c00"></p>
+
+<script>
+	// Attach login handler
+	const loginForm = document.getElementById('login-form');
+	const loginMsg = document.getElementById('login-message');
+
+	loginForm.addEventListener('submit', async (e) => {
+		e.preventDefault();
+		loginMsg.style.color = '#c00';
+		loginMsg.textContent = '';
+
+		const email = document.getElementById('email').value.trim();
+		const password = document.getElementById('password').value;
+
+		if (!email || !password) {
+			loginMsg.textContent = 'Please enter email and password.';
+			return;
+		}
+
+		try {
+			const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+			if (error) {
+				loginMsg.textContent = error.message || 'Login error';
+				return;
+			}
+
+			// Successful login
+			loginMsg.style.color = '#080';
+			loginMsg.textContent = 'Login successful — redirecting...';
+			window.location.href = 'student-dashboard.html';
+		} catch (err) {
+			loginMsg.textContent = err.message || 'Unexpected error';
+		}
+	});
+
+	// Optional: Google OAuth button (opens Supabase's OAuth flow)
+	document.getElementById('google-btn').addEventListener('click', async () => {
+		await supabaseClient.auth.signInWithOAuth({ provider: 'google' });
+	});
+</script>
 
 <p style="margin-top:20px;text-align:center;">
 Don't have an account?

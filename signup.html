@@ -1,91 +1,188 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-    <meta charset="UTF-8">
-<meta name="description" content="Create your CourseMark account and start learning from trusted local creators.">
-<meta name="theme-color" content="#0f1724">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Create Account | CourseMark</title>
-<link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-<nav>
-    <a href="index.html" class="logo">CourseMark</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="Create your CourseMark account and start learning from trusted local creators."
+    />
+    <meta name="theme-color" content="#0f1724" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Account | CourseMark</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- Supabase JS (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/supabase.min.js"></script>
+    <script>
+      // Supabase config - replace anon key with your project's public anon key
+      const SUPABASE_URL = "https://foxnhxtpvwvqnkwcegje.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZveG5oeHRwdnd2cW5rd2NlZ2plIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMDgxNTUsImV4cCI6MjA5Nzg4NDE1NX0.WrjYZzLhq5z41pFYhfdQ_yJQMxfUrAV-8PgU0ENZPEk";
+      const supabaseClient = supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY,
+      );
+    </script>
+  </head>
+  <body>
+    <nav>
+      <a href="index.html" class="logo">CourseMark</a>
 
-    <ul>
+      <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="courses.html">Courses</a></li>
-    </ul>
-</nav>
+      </ul>
+    </nav>
 
-<div class="auth-wrapper">
-
-    <div class="auth-card">
-
-        <h2>Create Your Account </h2>
+    <div class="auth-wrapper">
+      <div class="auth-card">
+        <h2>Create Your Account</h2>
 
         <p class="sub">
-            Join CourseMark and start learning from trusted local creators.
+          Join CourseMark and start learning from trusted local creators.
         </p>
 
-        <form>
+        <form id="signup-form">
+          <div class="input-group">
+            <label for="full-name">Full Name</label>
+            <input
+              id="full-name"
+              name="full-name"
+              type="text"
+              placeholder="Muhammed Safvan"
+              required
+            />
+          </div>
 
-            <div class="input-group">
-                <label>Full Name</label>
-                <input
-                    type="text"
-                    placeholder="Muhammed Safvan"
-                    required>
-            </div>
+          <div class="input-group">
+            <label for="email">Email Address</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
 
-            <div class="input-group">
-                <label>Email Address</label>
-                <input
-                    type="email"
-                    placeholder="you@example.com"
-                    required>
-            </div>
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Create a password"
+              required
+            />
+          </div>
 
-            <div class="input-group">
-                <label>Password</label>
-                <input
-                    type="password"
-                    placeholder="Create a password"
-                    required>
-            </div>
-
-            <div class="input-group">
-                <label>Confirm Password</label>
-                <input
-                    type="password"
-                    placeholder="Confirm your password"
-                    required>
-            </div>
-            <button
-                type="button"
-                class="btn-primary"
-                onclick="window.location.href='student-dashboard.html'">
-
-                Create Account
-
-            </button>
-
+          <div class="input-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input
+              id="confirm-password"
+              name="confirm-password"
+              type="password"
+              placeholder="Confirm your password"
+              required
+            />
+          </div>
+          <button type="submit" class="btn-primary">Create Account</button>
         </form>
 
-        <div style="margin-top:20px;text-align:center;">
-            <button class="btn-primary" style="background:#fff;border:1px solid #ddd;color:#0f1724;">
-                Continue with Google
-            </button>
+        <div style="margin-top: 20px; text-align: center">
+          <button
+            id="google-btn"
+            class="btn-primary"
+            style="background: #fff; border: 1px solid #ddd; color: #0f1724"
+          >
+            Continue with Google
+          </button>
         </div>
 
-        <p style="margin-top:20px;text-align:center;">
-            Already have an account?
-            <a href="login.html">Login</a>
+        <p
+          id="signup-message"
+          role="status"
+          style="text-align: center; margin-top: 12px; color: #c00"
+        ></p>
+
+        <script>
+          const signupForm = document.getElementById("signup-form");
+          const signupMsg = document.getElementById("signup-message");
+
+          signupForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            signupMsg.style.color = "#c00";
+            signupMsg.textContent = "";
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            const confirm = document.getElementById("confirm-password").value;
+
+            if (!email) {
+              signupMsg.textContent = "Please enter an email.";
+              return;
+            }
+            if (password.length < 6) {
+              signupMsg.textContent = "Password must be at least 6 characters.";
+              return;
+            }
+            if (password !== confirm) {
+              signupMsg.textContent = "Passwords do not match.";
+              return;
+            }
+
+            try {
+              const { data, error } = await supabaseClient.auth.signUp({
+                email,
+                password,
+              });
+              if (error) {
+                signupMsg.textContent = error.message || "Signup error";
+                return;
+              }
+
+              // On successful signup, try to create/update a profile row
+              const user = data?.user;
+              const fullName = document
+                .getElementById("full-name")
+                .value.trim();
+              if (user && fullName) {
+                try {
+                  // upsert ensures we don't fail if profile already exists
+                  const { error: profileError } = await supabaseClient
+                    .from("profiles")
+                    .upsert(
+                      { id: user.id, full_name: fullName, email: user.email },
+                      { returning: "minimal" },
+                    );
+                  if (profileError)
+                    console.warn(
+                      "Profile upsert error",
+                      profileError.message || profileError,
+                    );
+                } catch (pe) {
+                  console.warn("Profile upsert exception", pe);
+                }
+              }
+
+              signupMsg.style.color = "#080";
+              signupMsg.textContent = "Signup successful — redirecting...";
+              window.location.href = "student-dashboard.html";
+            } catch (err) {
+              signupMsg.textContent = err.message || "Unexpected error";
+            }
+          });
+
+          document
+            .getElementById("google-btn")
+            .addEventListener("click", async () => {
+              await supabaseClient.auth.signInWithOAuth({ provider: "google" });
+            });
+        </script>
+
+        <p style="margin-top: 20px; text-align: center">
+          Already have an account?
+          <a href="login.html">Login</a>
         </p>
-
+      </div>
     </div>
-
-</div>
-</body>
+  </body>
 </html>
-
