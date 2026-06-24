@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Course Details</title>
+    <title>Kerala Cooking Masterclass | CourseMark</title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
@@ -14,6 +14,10 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="courses.html">Courses</a></li>
       </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="nav-login-link">Login</a>
+        <a href="signup.html" class="login-btn">Student Sign Up</a>
+      </div>
     </nav>
 
     <section class="course-details">
@@ -38,9 +42,9 @@
 
         <h2>Kerala Cooking Masterclass</h2>
         <div class="course-meta">
-          <span>⭐ 4.9 Rating</span>
-          <span>👨‍🎓 1,250 Students</span>
-          <span>🏆 Bestseller</span>
+          <span>4.9 Rating</span>
+          <span>1,250 Students</span>
+          <span>Bestseller</span>
         </div>
         <p>
           Learn authentic Kerala recipes with a complete library of recorded
@@ -105,16 +109,12 @@
         const player = document.getElementById("coursePlayer");
 
         function setEnrolledUI() {
-          console.debug("[enroll] setEnrolledUI");
           if (!enrollLink) return;
           enrollLink.classList.add("enrolled");
-          enrollLink.textContent = "Enrolled — Start Course";
+          enrollLink.textContent = "Enrolled - Start Course";
           enrollLink.href = "#coursePlayer";
           enrollLink.style.background = "#16a34a";
           enrollLink.style.color = "#ffffff";
-          enrollLink.style.padding = "10px 14px";
-          enrollLink.style.borderRadius = "8px";
-          enrollLink.style.display = "inline-block";
         }
 
         function removeStartButton() {
@@ -123,7 +123,6 @@
         }
 
         function createStartButton() {
-          console.debug("[enroll] createStartButton");
           removeStartButton();
           const btn = document.createElement("button");
           btn.id = "startCourseBtn";
@@ -137,7 +136,6 @@
           btn.style.borderRadius = "8px";
           btn.style.cursor = "pointer";
           btn.addEventListener("click", function () {
-            console.debug("[enroll] start button clicked");
             if (!player) return;
             player.play().catch(function (err) {
               console.warn(
@@ -157,18 +155,15 @@
         }
 
         function goToPlayer(allowAutoplay = true) {
-          console.debug("[enroll] goToPlayer", { allowAutoplay });
           if (player) {
             player.scrollIntoView({ behavior: "smooth" });
             if (!allowAutoplay) {
               createStartButton();
               return;
             }
-            console.debug("[enroll] attempting player.play()");
             player
               .play()
               .then(() => {
-                console.debug("[enroll] player.play() succeeded");
                 removeStartButton();
               })
               .catch((err) => {
@@ -178,30 +173,19 @@
           }
         }
 
-        function onEnrollClick(e) {
-          console.debug("[enroll] enroll link clicked");
-          e.preventDefault();
-          try {
-            localStorage.setItem(courseKey, "true");
-            console.debug("[enroll] localStorage set");
-          } catch (err) {
-            console.warn("[enroll] localStorage set failed", err);
-          }
-          setEnrolledUI();
-          goToPlayer(true);
-        }
-
         if (localStorage.getItem(courseKey)) {
-          console.debug("[enroll] found enrolled flag in localStorage");
           setEnrolledUI();
         }
 
         if (enrollLink) {
-          enrollLink.addEventListener("click", onEnrollClick);
+          enrollLink.addEventListener("click", function (event) {
+            if (!enrollLink.classList.contains("enrolled")) return;
+            event.preventDefault();
+            goToPlayer(true);
+          });
         }
 
         if (location.search.indexOf("enrolled=1") !== -1) {
-          console.debug("[enroll] detected enrolled=1 in querystring");
           try {
             localStorage.setItem(courseKey, "true");
           } catch (e) {

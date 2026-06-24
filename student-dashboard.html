@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Dashboard</title>
+<title>Student Dashboard | CourseMark</title>
 <link rel="stylesheet" href="css/style.css">
-</head>
-<!-- Supabase JS (CDN) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/supabase.min.js"></script>
 <script>
 	// Supabase config - replace anon key with your project's public anon key
@@ -22,8 +21,8 @@
 <ul>
 <li><a href="index.html">Home</a></li>
 <li><a href="courses.html">Courses</a></li>
-<li><a href="login.html">Logout</a></li>
 </ul>
+<button id="logout-btn" type="button" class="login-btn">Logout</button>
 </nav>
 
 <section class="dashboard">
@@ -59,7 +58,7 @@
 <p>Progress: 80%</p>
 <div class="progress-bar"><span style="width:80%"></span></div>
 <p>Lifetime access active</p>
-<button>Continue</button>
+<a href="course-details.html" class="card-action">Continue</a>
 </div>
 
 <div class="course-card">
@@ -67,7 +66,7 @@
 <p>Progress: 50%</p>
 <div class="progress-bar"><span style="width:50%"></span></div>
 <p>Certificate countdown: 7 lessons left</p>
-<button>Continue</button>
+<a href="course-details.html" class="card-action">Continue</a>
 </div>
 
 </div>
@@ -104,6 +103,11 @@
 			window.location.href = 'login.html';
 		}
 	})();
+
+	document.getElementById('logout-btn').addEventListener('click', async () => {
+		await supabaseClient.auth.signOut();
+		window.location.href = 'login.html';
+	});
 </script>
 
 </body>

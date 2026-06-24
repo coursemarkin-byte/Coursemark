@@ -12,31 +12,38 @@
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="courses.html">Courses</a></li>
-        <li><a href="login.html">Login</a></li>
       </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="nav-login-link">Login</a>
+        <a href="signup.html" class="login-btn">Student Sign Up</a>
+      </div>
     </nav>
 
-    <section class="auth-wrapper" style="padding: 4rem 1.5rem">
-      <div
-        class="auth-card"
-        style="max-width: 560px; margin: 0 auto; padding: 2.5rem"
-      >
+    <main class="auth-wrapper">
+      <div class="auth-card enrollment-card">
         <h1>Request Enrollment</h1>
-        <p style="margin-bottom: 1.5rem; color: #475569">
+        <p class="form-note">
           Submit your details and we will confirm your enrollment for the
-          course. No payment is required now — payment will be collected
+          course. No payment is required now - payment will be collected
           manually after your request is approved.
         </p>
 
         <form id="enrollmentForm">
           <div class="input-group">
-            <label>Full Name</label>
-            <input type="text" name="name" placeholder="Your name" required />
+            <label for="enroll-name">Full Name</label>
+            <input
+              id="enroll-name"
+              type="text"
+              name="name"
+              placeholder="Your name"
+              required
+            />
           </div>
 
           <div class="input-group">
-            <label>Email Address</label>
+            <label for="enroll-email">Email Address</label>
             <input
+              id="enroll-email"
               type="email"
               name="email"
               placeholder="you@example.com"
@@ -45,8 +52,9 @@
           </div>
 
           <div class="input-group">
-            <label>Phone Number</label>
+            <label for="enroll-phone">Phone Number</label>
             <input
+              id="enroll-phone"
               type="tel"
               name="phone"
               placeholder="+91 98765 43210"
@@ -55,8 +63,9 @@
           </div>
 
           <div class="input-group">
-            <label>Course</label>
+            <label for="enroll-course">Course</label>
             <input
+              id="enroll-course"
               type="text"
               name="course"
               value="Kerala Cooking Masterclass"
@@ -64,36 +73,31 @@
             />
           </div>
 
-          <button type="submit" class="btn-primary" style="width: 100%">
+          <button type="submit" class="btn-primary">
             Submit Enrollment Request
           </button>
         </form>
 
         <p
           id="enrollMessage"
-          style="
-            margin-top: 1rem;
-            display: none;
-            color: #16a34a;
-            font-weight: 700;
-          "
+          class="status-message"
+          role="status"
+          aria-live="polite"
+          hidden
         ></p>
 
-        <p style="margin-top: 1rem">
-          <a
-            href="course-details.html"
-            style="color: #0f1724; font-weight: 700; text-decoration: none"
-          >
-            ← Back to course details
+        <p class="form-footnote">
+          <a href="course-details.html" class="back-link">
+            &larr; Back to course details
           </a>
         </p>
 
-        <p style="margin-top: 1.25rem; color: #64748b; font-size: 0.95rem">
+        <p class="form-footnote">
           After submission, your request will be recorded for admin approval. An
           administrator will contact you with payment instructions if required.
         </p>
       </div>
-    </section>
+    </main>
 
     <script>
       const enrollmentForm = document.getElementById("enrollmentForm");
@@ -102,14 +106,14 @@
       enrollmentForm.addEventListener("submit", function (event) {
         event.preventDefault();
         try {
-          localStorage.setItem("enrolled_KeralaCookingMasterclass", "true");
+          localStorage.setItem("enrolled_KeralaMasterclass", "true");
         } catch (e) {
           // ignore storage errors
         }
 
-        enrollMessage.style.display = "block";
+        enrollMessage.hidden = false;
         enrollMessage.textContent =
-          "Request submitted — an administrator will review and contact you for payment if needed.";
+          "Request submitted - an administrator will review and contact you for payment if needed.";
 
         // Redirect back to course details after a short pause
         setTimeout(() => {

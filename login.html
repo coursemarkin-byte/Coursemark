@@ -1,6 +1,7 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login | CourseMark</title>
 <link rel="stylesheet" href="css/style.css">
@@ -21,12 +22,13 @@
 <li><a href="index.html">Home</a></li>
 <li><a href="courses.html">Courses</a></li>
 </ul>
+<a href="signup.html" class="login-btn">Student Sign Up</a>
 </nav>
 <div class="auth-wrapper">
 
 <div class="auth-card">
 
-<h2>Welcome Back 👋</h2>
+<h2>Welcome Back</h2>
 
 <p class="sub">
 Login to continue learning with CourseMark.
@@ -44,23 +46,18 @@ Login to continue learning with CourseMark.
 <input id="password" name="password" type="password" placeholder="Enter your password" required>
 </div>
 
-<p style="text-align:right;margin-top:10px;">
-<a href="#">Forgot Password?</a>
-</p>
+<button type="submit" class="btn-primary">Login</button>
 
-<div style="display:flex;gap:12px;align-items:center;justify-content:center;margin-top:12px;">
-	<button type="submit" class="btn-primary">Login</button>
-	<span style="font-size:0.95rem;color:#475569;">or <a href="signup.html">Sign Up</a></span>
-</div>
+<button id="google-btn" type="button" class="btn-primary google-button">Continue with Google</button>
 
-<div style="margin-top:20px;">
-	<button id="google-btn" class="btn-primary" style="background:#fff;border:1px solid #ddd;">Continue with Google</button>
-
+<div class="auth-links">
+	<button id="forgot-password-btn" type="button" class="link-button">Forgot password?</button>
+	<span>New student? <a href="signup.html">Create an account</a></span>
 </div>
 
 </form>
 
-<p id="login-message" role="status" style="text-align:center;margin-top:12px;color:#c00"></p>
+<p id="login-message" class="status-message" role="status" aria-live="polite"></p>
 
 <script>
 	// Attach login handler
@@ -89,7 +86,7 @@ Login to continue learning with CourseMark.
 
 			// Successful login
 			loginMsg.style.color = '#080';
-			loginMsg.textContent = 'Login successful — redirecting...';
+			loginMsg.textContent = 'Login successful - redirecting...';
 			window.location.href = 'student-dashboard.html';
 		} catch (err) {
 			loginMsg.textContent = err.message || 'Unexpected error';
@@ -98,11 +95,36 @@ Login to continue learning with CourseMark.
 
 	// Optional: Google OAuth button (opens Supabase's OAuth flow)
 	document.getElementById('google-btn').addEventListener('click', async () => {
-		await supabaseClient.auth.signInWithOAuth({ provider: 'google' });
+		const { error } = await supabaseClient.auth.signInWithOAuth({
+			provider: 'google',
+			options: { redirectTo: new URL('student-dashboard.html', window.location.href).href }
+		});
+		if (error) loginMsg.textContent = error.message;
+	});
+
+	document.getElementById('forgot-password-btn').addEventListener('click', async () => {
+		const email = document.getElementById('email').value.trim();
+		loginMsg.style.color = '#c00';
+
+		if (!email) {
+			loginMsg.textContent = 'Enter your email address first.';
+			document.getElementById('email').focus();
+			return;
+		}
+
+		const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+			redirectTo: new URL('login.html', window.location.href).href
+		});
+
+		if (error) {
+			loginMsg.textContent = error.message;
+			return;
+		}
+
+		loginMsg.style.color = '#15803d';
+		loginMsg.textContent = 'Password reset instructions were sent to your email.';
 	});
 </script>
-
-<!-- moved inline next to the Login button -->
 
 </div>
 

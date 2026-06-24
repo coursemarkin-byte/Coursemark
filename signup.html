@@ -31,7 +31,7 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="courses.html">Courses</a></li>
       </ul>
-      <a href="signup.html" class="login-btn">Sign Up</a>
+      <a href="login.html" class="login-btn">Login</a>
     </nav>
 
     <div class="auth-wrapper">
@@ -97,11 +97,11 @@
           </button>
         </form>
 
-        <div style="margin-top: 20px; text-align: center">
+        <div>
           <button
             id="google-btn"
-            class="btn-primary"
-            style="background: #fff; border: 1px solid #ddd; color: #0f1724"
+            type="button"
+            class="btn-primary google-button"
           >
             Continue with Google
           </button>
@@ -109,8 +109,9 @@
 
         <p
           id="signup-message"
+          class="status-message"
           role="status"
-          style="text-align: center; margin-top: 12px; color: #c00"
+          aria-live="polite"
         ></p>
 
         <script>
@@ -182,8 +183,14 @@
               }
 
               signupMsg.style.color = "#080";
-              signupMsg.textContent = "Signup successful — redirecting...";
-              window.location.href = "student-dashboard.html";
+              if (data?.session) {
+                signupMsg.textContent = "Signup successful - redirecting...";
+                window.location.href = "student-dashboard.html";
+                return;
+              }
+
+              signupMsg.textContent =
+                "Account created. Check your email to confirm your account, then log in.";
             } catch (err) {
               signupMsg.textContent = err.message || "Unexpected error";
             }
@@ -192,11 +199,20 @@
           document
             .getElementById("google-btn")
             .addEventListener("click", async () => {
-              await supabaseClient.auth.signInWithOAuth({ provider: "google" });
+              const { error } = await supabaseClient.auth.signInWithOAuth({
+                provider: "google",
+                options: {
+                  redirectTo: new URL(
+                    "student-dashboard.html",
+                    window.location.href,
+                  ).href,
+                },
+              });
+              if (error) signupMsg.textContent = error.message;
             });
         </script>
 
-        <p style="margin-top: 20px; text-align: center">
+        <p class="auth-footer">
           Already have an account?
           <a href="login.html">Login</a>
         </p>
