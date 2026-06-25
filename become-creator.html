@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Become an Instructor</title>
+<title>Become a Creator</title>
 <link rel="stylesheet" href="css/style.css">
 
 </head>
@@ -15,17 +15,17 @@
 <ul>
 <li><a href="index.html">Home</a></li>
 <li><a href="courses.html">Courses</a></li>
-<li><a href="instructors.html">Instructors</a></li>
+<li><a href="creators.html">Creators</a></li>
 </ul>
 <div class="nav-actions">
 <a href="login.html" class="nav-login-link">Login</a>
-<a href="signup.html" class="login-btn">Student Sign Up</a>
+<a href="signup.html" class="login-btn"> Sign Up</a>
 </div>
 </nav>
 
-<section class="instructor-form instructor-onboarding">
+<section class="creator-form creator-onboarding">
 
-<p class="eyebrow">Instructor onboarding</p>
+<p class="eyebrow">Creator onboarding</p>
 <h1>Apply to Teach on CourseMark</h1>
 
 <p>
@@ -34,7 +34,7 @@ Complete the application for profile, document, and course verification.
 
 <div class="onboarding-shell">
 
-<div class="onboarding-progress" aria-label="Instructor onboarding progress">
+<div class="onboarding-progress" aria-label="Creator onboarding progress">
 <div class="progress-track"><span style="width:16.6%"></span></div>
 <ol>
 <li class="active">Personal</li>
@@ -46,7 +46,7 @@ Complete the application for profile, document, and course verification.
 </ol>
 </div>
 
-<form id="instructorOnboardingForm" class="multi-step-form">
+<form id="creatorOnboardingForm" class="multi-step-form">
 
 <div class="form-step active" data-step="1">
 <h2>Personal Information</h2>
@@ -81,7 +81,7 @@ Complete the application for profile, document, and course verification.
 </div>
 
 <div class="form-step" data-step="4">
-<h2>Instructor Profile</h2>
+<h2>Creator Profile</h2>
 <div class="form-grid">
 <label>Professional Headline<input name="Professional Headline" type="text" placeholder="Kerala cooking expert with 10+ years experience"></label>
 <label>LinkedIn Profile (Optional)<input name="LinkedIn Profile" type="url" placeholder="https://linkedin.com/in/..."></label>
@@ -124,7 +124,7 @@ Complete the application for profile, document, and course verification.
 <h2>Review & Submit</h2>
 <div id="applicationSummary" class="review-summary"></div>
 <label class="check-row"><input name="Terms Agreement" type="checkbox" required> I agree to the Terms & Conditions</label>
-<label class="check-row"><input name="Guidelines Agreement" type="checkbox" required> I agree to the CourseMark Instructor Guidelines</label>
+<label class="check-row"><input name="Guidelines Agreement" type="checkbox" required> I agree to the CourseMark Creator Guidelines</label>
 </div>
 
 <div class="success-state" id="onboardingSuccess" hidden>
@@ -144,7 +144,12 @@ Complete the application for profile, document, and course verification.
 
 </section>
 
-<script src="js/onboarding.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/script.js"></script>
+<script src="js/creator-onboarding.js"></script>
 
 </body>
 </html>

@@ -1,6 +1,10 @@
-const onboardingForm = document.querySelector("#instructorOnboardingForm");
+(function initializeCreatorOnboarding(global) {
+  "use strict";
 
-if (onboardingForm) {
+  const onboardingForm = document.querySelector("#creatorOnboardingForm");
+  if (!onboardingForm) return;
+
+  const { escapeHtml } = global.CourseMarkUtils;
   const steps = [...onboardingForm.querySelectorAll(".form-step")];
   const progressItems = [...document.querySelectorAll(".onboarding-progress li")];
   const progressFill = document.querySelector(".progress-track span");
@@ -19,15 +23,6 @@ if (onboardingForm) {
       return field.checked ? "Agreed" : "Not agreed";
     }
     return field.value || "Not provided";
-  }
-
-  function escapeHtml(value) {
-    return String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
   }
 
   function buildSummary() {
@@ -90,4 +85,4 @@ if (onboardingForm) {
   });
 
   showStep(currentStep);
-}
+})(window);

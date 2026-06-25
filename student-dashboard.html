@@ -5,13 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Student Dashboard | CourseMark</title>
 <link rel="stylesheet" href="css/style.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<script>
-	// Supabase config - replace anon key with your project's public anon key
-	const SUPABASE_URL = 'https://foxnhxtpvwvqnkwcegje.supabase.co';
-	const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZveG5oeHRwdnd2cW5rd2NlZ2plIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMDgxNTUsImV4cCI6MjA5Nzg4NDE1NX0.WrjYZzLhq5z41pFYhfdQ_yJQMxfUrAV-8PgU0ENZPEk';
-	const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-</script>
 </head>
 <body>
 
@@ -73,43 +66,10 @@
 
 </section>
 
-<script>
-	// Redirect to login if no active session
-	(async function checkSession() {
-		try {
-			const { data } = await supabaseClient.auth.getSession();
-			const session = data?.session;
-			if (!session) {
-				window.location.href = 'login.html';
-				return;
-			}
-
-			const user = session.user;
-			// Try to fetch profile to show the full name
-			try {
-				const { data: profileData, error: profileErr } = await supabaseClient
-					.from('profiles')
-					.select('full_name')
-					.eq('id', user.id)
-					.single();
-				const fullName = profileData?.full_name;
-				const welcome = document.getElementById('welcome-name');
-				if (welcome) welcome.textContent = `Welcome, ${fullName || user.email || 'Student'}`;
-			} catch (err) {
-				console.warn('Profile fetch error', err);
-			}
-		} catch (err) {
-			console.error('Session check failed', err);
-			window.location.href = 'login.html';
-		}
-	})();
-
-	document.getElementById('logout-btn').addEventListener('click', async () => {
-		await supabaseClient.auth.signOut();
-		window.location.href = 'login.html';
-	});
-</script>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/student.js"></script>
 </body>
 </html>
-

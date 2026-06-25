@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -8,20 +8,8 @@
     />
     <meta name="theme-color" content="#0f1724" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student Registration | CourseMark</title>
+    <title> Registration | CourseMark</title>
     <link rel="stylesheet" href="css/style.css" />
-    <!-- Supabase JS (CDN) -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-    <script>
-      // Supabase config - replace anon key with your project's public anon key
-      const SUPABASE_URL = "https://foxnhxtpvwvqnkwcegje.supabase.co";
-      const SUPABASE_ANON_KEY =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZveG5oeHRwdnd2cW5rd2NlZ2plIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMDgxNTUsImV4cCI6MjA5Nzg4NDE1NX0.WrjYZzLhq5z41pFYhfdQ_yJQMxfUrAV-8PgU0ENZPEk";
-      const supabaseClient = supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY,
-      );
-    </script>
   </head>
   <body>
     <nav>
@@ -36,10 +24,10 @@
 
     <div class="auth-wrapper">
       <div class="auth-card">
-        <h2>Student Registration</h2>
+        <h2> Registration</h2>
 
         <p class="sub">
-          Create a student account to browse, purchase, and access courses.
+          Create an account to browse, purchase, and access courses.
         </p>
 
         <form id="signup-form">
@@ -50,6 +38,7 @@
               name="full-name"
               type="text"
               placeholder="Muhammed Safvan"
+              autocomplete="name"
               required
             />
           </div>
@@ -61,6 +50,7 @@
               name="email"
               type="email"
               placeholder="you@example.com"
+              autocomplete="email"
               required
             />
           </div>
@@ -72,6 +62,8 @@
               name="password"
               type="password"
               placeholder="Create a password"
+              autocomplete="new-password"
+              minlength="6"
               required
             />
           </div>
@@ -83,10 +75,19 @@
               name="confirm-password"
               type="password"
               placeholder="Confirm your password"
+              autocomplete="new-password"
+              minlength="6"
               required
             />
           </div>
+          <div class="input-group">
+            <label for="role">Account Type</label>
 
+            <select id="role" name="role" required>
+              <option value="student">Student</option>
+              <option value="creator">Creator</option>
+            </select>
+          </div>
           <button
             id="signup-btn"
             type="submit"
@@ -97,16 +98,6 @@
           </button>
         </form>
 
-        <div>
-          <button
-            id="google-btn"
-            type="button"
-            class="btn-primary google-button"
-          >
-            Continue with Google
-          </button>
-        </div>
-
         <p
           id="signup-message"
           class="status-message"
@@ -114,109 +105,17 @@
           aria-live="polite"
         ></p>
 
-        <script>
-          const signupForm = document.getElementById("signup-form");
-          const signupMsg = document.getElementById("signup-message");
-
-          signupForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            signupMsg.style.color = "#c00";
-            signupMsg.textContent = "";
-
-            const email = document.getElementById("email").value.trim();
-            const password = document.getElementById("password").value;
-            const confirm = document.getElementById("confirm-password").value;
-
-            if (!email) {
-              signupMsg.textContent = "Please enter an email.";
-              return;
-            }
-            if (password.length < 6) {
-              signupMsg.textContent = "Password must be at least 6 characters.";
-              return;
-            }
-            if (password !== confirm) {
-              signupMsg.textContent = "Passwords do not match.";
-              return;
-            }
-
-            try {
-              const { data, error } = await supabaseClient.auth.signUp({
-                email,
-                password,
-                options: {
-                  data: {
-                    full_name: document
-                      .getElementById("full-name")
-                      .value.trim(),
-                    account_type: "student",
-                  },
-                },
-              });
-              if (error) {
-                signupMsg.textContent = error.message || "Signup error";
-                return;
-              }
-
-              // On successful signup, try to create/update a profile row
-              const user = data?.user;
-              const fullName = document
-                .getElementById("full-name")
-                .value.trim();
-              if (user && fullName) {
-                try {
-                  // upsert ensures we don't fail if profile already exists
-                  const { error: profileError } = await supabaseClient
-                    .from("profiles")
-                    .upsert(
-                      { id: user.id, full_name: fullName, email: user.email },
-                      { returning: "minimal" },
-                    );
-                  if (profileError)
-                    console.warn(
-                      "Profile upsert error",
-                      profileError.message || profileError,
-                    );
-                } catch (pe) {
-                  console.warn("Profile upsert exception", pe);
-                }
-              }
-
-              signupMsg.style.color = "#080";
-              if (data?.session) {
-                signupMsg.textContent = "Signup successful - redirecting...";
-                window.location.href = "student-dashboard.html";
-                return;
-              }
-
-              signupMsg.textContent =
-                "Account created. Check your email to confirm your account, then log in.";
-            } catch (err) {
-              signupMsg.textContent = err.message || "Unexpected error";
-            }
-          });
-
-          document
-            .getElementById("google-btn")
-            .addEventListener("click", async () => {
-              const { error } = await supabaseClient.auth.signInWithOAuth({
-                provider: "google",
-                options: {
-                  redirectTo: new URL(
-                    "student-dashboard.html",
-                    window.location.href,
-                  ).href,
-                },
-              });
-              if (error) signupMsg.textContent = error.message;
-            });
-        </script>
-
         <p class="auth-footer">
           Already have an account?
           <a href="login.html">Login</a>
         </p>
       </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/signup.js"></script>
   </body>
 </html>

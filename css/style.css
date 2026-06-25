@@ -1111,7 +1111,7 @@ footer .footer-bottom {
 
 .dashboard,
 .profile,
-.featured-instructors {
+.featured-creators {
   width: min(100%, var(--max-w));
   margin-inline: auto;
   padding: var(--space-xl) var(--space-md);
@@ -1119,7 +1119,7 @@ footer .footer-bottom {
 
 .dashboard > h1,
 .profile > h1,
-.featured-instructors > h1 {
+.featured-creators > h1 {
   font-family: var(--font-display);
   font-size: clamp(1.8rem, 4vw, 2.6rem);
   line-height: 1.2;
@@ -1246,22 +1246,22 @@ footer .footer-bottom {
   color: rgba(255, 255, 255, .7);
 }
 
-.featured-instructors {
+.featured-creators {
   text-align: center;
 }
 
-.featured-instructors > p {
+.featured-creators > p {
   margin-inline: auto;
 }
 
-.instructor-grid {
+.creator-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: var(--space-md);
   margin-top: var(--space-lg);
 }
 
-.instructor-card {
+.creator-card {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1272,7 +1272,7 @@ footer .footer-bottom {
   box-shadow: var(--shadow-sm);
 }
 
-.instructor-card img,
+.creator-card img,
 .profile > img {
   width: 128px;
   height: 128px;
@@ -1281,12 +1281,12 @@ footer .footer-bottom {
   margin-bottom: var(--space-sm);
 }
 
-.instructor-card h3 {
+.creator-card h3 {
   font-family: var(--font-display);
   color: var(--clr-navy);
 }
 
-.instructor-card .card-action {
+.creator-card .card-action {
   width: 100%;
   margin: auto 0 0;
   margin-top: var(--space-sm);
@@ -1391,7 +1391,7 @@ footer .footer-bottom {
   .stats > div { border-right: none; border-bottom: 1px solid rgba(255,255,255,.07); }
 
   .course-grid,
-  .instructor-grid,
+  .creator-grid,
   .steps { grid-template-columns: 1fr; }
 
   .category-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1433,7 +1433,7 @@ footer .footer-bottom {
   .auth-links { align-items: flex-start; flex-direction: column; }
   .dashboard,
   .profile,
-  .featured-instructors { padding-block: var(--space-lg); }
+  .featured-creators { padding-block: var(--space-lg); }
 }
 
 /* ── ════════════════════════════════════════════════════════
@@ -1454,7 +1454,7 @@ footer .footer-bottom {
 .hero .search-panel { animation-delay: .25s; }
 .hero .quick-topics { animation-delay: .32s; animation: fadeUp .55s var(--ease) both; }
 /* ==========================================
-   COURSEMARK INSTRUCTOR ONBOARDING
+   COURSEMARK CREATOR ONBOARDING
 ========================================== */
 
 .onboarding-page{
@@ -1462,13 +1462,13 @@ footer .footer-bottom {
     min-height:100vh;
 }
 
-.instructor-onboarding{
+.creator-onboarding{
     max-width:1100px;
     margin:0 auto;
     padding:60px 20px;
 }
 
-.instructor-onboarding .eyebrow{
+.creator-onboarding .eyebrow{
     color:#f59e0b;
     font-weight:700;
     text-transform:uppercase;
@@ -1476,14 +1476,14 @@ footer .footer-bottom {
     margin-bottom:10px;
 }
 
-.instructor-onboarding h1{
+.creator-onboarding h1{
     font-family:'Sora',sans-serif;
     font-size:2.5rem;
     color:#0f1724;
     margin-bottom:10px;
 }
 
-.instructor-onboarding > p{
+.creator-onboarding > p{
     color:#64748b;
     margin-bottom:30px;
 }

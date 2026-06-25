@@ -15,7 +15,7 @@
       </ul>
       <div class="nav-actions">
         <a href="login.html" class="nav-login-link">Login</a>
-        <a href="signup.html" class="login-btn">Student Sign Up</a>
+        <a href="signup.html" class="login-btn"> Sign Up</a>
       </div>
     </nav>
 
@@ -99,27 +99,11 @@
       </div>
     </main>
 
-    <script>
-      const enrollmentForm = document.getElementById("enrollmentForm");
-      const enrollMessage = document.getElementById("enrollMessage");
-
-      enrollmentForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-        try {
-          localStorage.setItem("enrolled_KeralaMasterclass", "true");
-        } catch (e) {
-          // ignore storage errors
-        }
-
-        enrollMessage.hidden = false;
-        enrollMessage.textContent =
-          "Request submitted - an administrator will review and contact you for payment if needed.";
-
-        // Redirect back to course details after a short pause
-        setTimeout(() => {
-          window.location.href = "course-details.html?enrolled=1";
-        }, 1500);
-      });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/checkout.js"></script>
   </body>
 </html>

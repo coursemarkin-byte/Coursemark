@@ -1,118 +1,133 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Courses - CourseMark</title>
-<link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Courses - CourseMark</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="index.html" class="logo">CourseMark</a>
 
-<nav>
-    <a href="index.html" class="logo">CourseMark</a>
-
-    <ul>
+      <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="courses.html">Courses</a></li>
-    </ul>
-    <div class="nav-actions">
+      </ul>
+      <div class="nav-actions">
         <a href="login.html" class="nav-login-link">Login</a>
-        <a href="signup.html" class="login-btn">Student Sign Up</a>
-    </div>
-</nav>
+        <a href="signup.html" class="login-btn"> Sign Up</a>
+      </div>
+    </nav>
 
-<section class="courses">
-<div class="page-hero">
-    <p class="eyebrow">Accessible Skill Learning</p>
-    <h1>Explore Kerala's Best Courses</h1>
-    <p>
-        Learn from verified local creators through
-        practical, affordable, and career-focused courses.
-    </p>
-</div>
-<form class="search-panel page-search">
-<input type="search" placeholder="Search cooking, yoga, business, art, music">
-<button type="submit">Search</button>
-</form>
+    <section class="courses">
+      <div class="page-hero">
+        <p class="eyebrow">Accessible Skill Learning</p>
+        <h1>Explore Kerala's Best Courses</h1>
+        <p>
+          Learn from verified local creators through practical, affordable, and
+          career-focused courses.
+        </p>
+      </div>
+      <form class="search-panel page-search">
+        <input
+          type="search"
+          placeholder="Search cooking, yoga, business, art, music"
+        />
+        <button type="submit">Search</button>
+      </form>
 
-<div class="course-filters">
-<button>All</button>
-<button>Beginner</button>
-<button>Intermediate</button>
-<button>Certificate</button>
-<button>Under Rs. 1000</button>
-</div>
+      <div class="course-filters">
+        <button>All</button>
+        <button>Beginner</button>
+        <button>Intermediate</button>
+        <button>Certificate</button>
+        <button>Under Rs. 1000</button>
+      </div>
 
-<div class="course-grid">
+      <div class="course-grid">
+        <div class="course-card">
+          <span class="badge">Learner favorite</span>
+          <img
+            src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=700&q=80"
+            alt="Kerala Cooking Masterclass"
+          />
+          <h3>Kerala Cooking Masterclass</h3>
+          <p>Anjali Nair | Kochi</p>
+          <p>Authentic recipes and kitchen techniques.</p>
+          <div class="course-meta">
+            <span>4.9 rating</span>
+            <span>Beginner</span>
+            <span>18 lessons</span>
+          </div>
+          <h4>Rs. 999</h4>
+          <a href="course-details.html" class="card-action">See Course</a>
+        </div>
 
-<div class="course-card">
-    <span class="badge">Learner favorite</span>
-    <img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=700&q=80" alt="Kerala Cooking Masterclass">
-    <h3>Kerala Cooking Masterclass</h3>
-    <p>Anjali Nair | Kochi</p>
-    <p>Authentic recipes and kitchen techniques.</p>
-    <div class="course-meta">
-    <span>4.9 rating</span>
-    <span>Beginner</span>
-    <span>18 lessons</span>
-    </div>
-    <h4>Rs. 999</h4>
-    <a href="course-details.html" class="card-action">See Course</a>
-</div>
+        <div class="course-card">
+          <span class="badge">Wellness</span>
+          <img
+            src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=700&q=80"
+            alt="Yoga for Beginners"
+          />
+          <h3>Yoga for Beginners</h3>
+          <p>Arun Kumar | Thrissur</p>
+          <p>Daily routines for better wellness.</p>
+          <div class="course-meta">
+            <span>4.8 rating</span>
+            <span>Beginner</span>
+            <span>12 lessons</span>
+          </div>
+          <h4>Rs. 799</h4>
+          <a href="course-details.html" class="card-action">See Course</a>
+        </div>
 
-<div class="course-card">
-    <span class="badge">Wellness</span>
-    <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=700&q=80" alt="Yoga for Beginners">
-    <h3>Yoga for Beginners</h3>
-    <p>Arun Kumar | Thrissur</p>
-    <p>Daily routines for better wellness.</p>
-    <div class="course-meta">
-    <span>4.8 rating</span>
-    <span>Beginner</span>
-    <span>12 lessons</span>
-    </div>
-    <h4>Rs. 799</h4>
-    <a href="course-details.html" class="card-action">See Course</a>
-</div>
+        <div class="course-card">
+          <span class="badge">Career skill</span>
+          <img
+            src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=700&q=80"
+            alt="Digital Marketing"
+          />
+          <h3>Digital Marketing</h3>
+          <p>Meera Joseph | Calicut</p>
+          <p>Digital growth fundamentals.</p>
+          <div class="course-meta">
+            <span>4.7 rating</span>
+            <span>Intermediate</span>
+            <span>Certificate</span>
+          </div>
+          <h4>Rs. 1499</h4>
+          <a href="course-details.html" class="card-action">See Course</a>
+        </div>
 
-<div class="course-card">
-    <span class="badge">Career skill</span>
-    <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=700&q=80" alt="Digital Marketing">
-    <h3>Digital Marketing</h3>
-    <p>Meera Joseph | Calicut</p>
-    <p>Digital growth fundamentals.</p>
-    <div class="course-meta">
-    <span>4.7 rating</span>
-    <span>Intermediate</span>
-    <span>Certificate</span>
-    </div>
-    <h4>Rs. 1499</h4>
-    <a href="course-details.html" class="card-action">See Course</a>
-</div>
+        <div class="course-card">
+          <span class="badge">Trending</span>
+          <img
+            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=700&q=80"
+            alt="Web Development"
+          />
+          <h3>Web Development Bootcamp</h3>
+          <p>Rahul Nair | Kochi</p>
+          <p>Learn HTML, CSS, JavaScript and modern web design.</p>
 
-<div class="course-card">
-    <span class="badge">Trending</span>
-    <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=700&q=80" alt="Web Development">
-    <h3>Web Development Bootcamp</h3>
-    <p>Rahul Nair | Kochi</p>
-    <p>Learn HTML, CSS, JavaScript and modern web design.</p>
+          <div class="course-meta">
+            <span>4.9 rating</span>
+            <span>Certificate</span>
+            <span>24 lessons</span>
+          </div>
 
-    <div class="course-meta">
-        <span>4.9 rating</span>
-        <span>Certificate</span>
-        <span>24 lessons</span>
-    </div>
+          <h4>Rs. 1299</h4>
 
-    <h4>Rs. 1299</h4>
+          <a href="course-details.html" class="card-action">See Course</a>
+        </div>
+      </div>
+    </section>
 
-    <a href="course-details.html" class="card-action">See Course</a>
-</div>
-
-
-
-</div>
-
-</section>
-
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/courses.js"></script>
+  </body>
 </html>

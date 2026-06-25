@@ -16,7 +16,7 @@
       </ul>
       <div class="nav-actions">
         <a href="login.html" class="nav-login-link">Login</a>
-        <a href="signup.html" class="login-btn">Student Sign Up</a>
+        <a href="signup.html" class="login-btn"> Sign Up</a>
       </div>
     </nav>
 
@@ -101,105 +101,11 @@
       </div>
     </section>
 
-    <script>
-      (function () {
-        console.debug("[enroll] init script");
-        const courseKey = "enrolled_KeralaMasterclass";
-        const enrollLink = document.querySelector(".price-action-link");
-        const player = document.getElementById("coursePlayer");
-
-        function setEnrolledUI() {
-          if (!enrollLink) return;
-          enrollLink.classList.add("enrolled");
-          enrollLink.textContent = "Enrolled - Start Course";
-          enrollLink.href = "#coursePlayer";
-          enrollLink.style.background = "#16a34a";
-          enrollLink.style.color = "#ffffff";
-        }
-
-        function removeStartButton() {
-          const existing = document.getElementById("startCourseBtn");
-          if (existing) existing.remove();
-        }
-
-        function createStartButton() {
-          removeStartButton();
-          const btn = document.createElement("button");
-          btn.id = "startCourseBtn";
-          btn.textContent = "Start Course";
-          btn.style.display = "block";
-          btn.style.margin = "12px 0";
-          btn.style.background = "#16a34a";
-          btn.style.color = "#fff";
-          btn.style.border = "none";
-          btn.style.padding = "10px 14px";
-          btn.style.borderRadius = "8px";
-          btn.style.cursor = "pointer";
-          btn.addEventListener("click", function () {
-            if (!player) return;
-            player.play().catch(function (err) {
-              console.warn(
-                "[enroll] player.play() rejected on start button click",
-                err,
-              );
-              player.focus();
-            });
-            removeStartButton();
-          });
-
-          if (player && player.parentNode) {
-            player.parentNode.insertBefore(btn, player.nextSibling);
-          } else if (player) {
-            player.insertAdjacentElement("afterend", btn);
-          }
-        }
-
-        function goToPlayer(allowAutoplay = true) {
-          if (player) {
-            player.scrollIntoView({ behavior: "smooth" });
-            if (!allowAutoplay) {
-              createStartButton();
-              return;
-            }
-            player
-              .play()
-              .then(() => {
-                removeStartButton();
-              })
-              .catch((err) => {
-                console.warn("[enroll] player.play() rejected", err);
-                createStartButton();
-              });
-          }
-        }
-
-        if (localStorage.getItem(courseKey)) {
-          setEnrolledUI();
-        }
-
-        if (enrollLink) {
-          enrollLink.addEventListener("click", function (event) {
-            if (!enrollLink.classList.contains("enrolled")) return;
-            event.preventDefault();
-            goToPlayer(true);
-          });
-        }
-
-        if (location.search.indexOf("enrolled=1") !== -1) {
-          try {
-            localStorage.setItem(courseKey, "true");
-          } catch (e) {
-            console.warn(
-              "[enroll] localStorage set failed on query redirect",
-              e,
-            );
-          }
-          setTimeout(() => {
-            setEnrolledUI();
-            goToPlayer(false);
-          }, 200);
-        }
-      })();
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/course-details.js"></script>
   </body>
 </html>

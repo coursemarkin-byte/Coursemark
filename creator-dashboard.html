@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Instructor Dashboard | CourseMark</title>
+<title>Creator Dashboard | CourseMark</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -14,13 +14,13 @@
 <ul>
 <li><a href="index.html">Home</a></li>
 <li><a href="courses.html">Courses</a></li>
-<li><a href="login.html">Logout</a></li>
+<li><a href="login.html" data-creator-logout>Logout</a></li>
 </ul>
 </nav>
 
 <section class="dashboard">
 
-<h1>Instructor Dashboard</h1>
+<h1>Creator Dashboard</h1>
 <p class="dashboard-lead">Upload recorded lessons, publish courses, and track learner progress from one place.</p>
 
 <div class="dashboard-cards">
@@ -64,7 +64,7 @@
 
 <div class="upload-studio">
 <div>
-<p class="eyebrow">Instructor video studio</p>
+<p class="eyebrow">Creator video studio</p>
 <h2>Upload a Recorded Lesson</h2>
 <p>Create a course once, upload your recorded video, and students can watch it on CourseMark with lifetime access.</p>
 </div>
@@ -87,6 +87,10 @@
 
 </section>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/creator.js"></script>
 </body>
 </html>
-

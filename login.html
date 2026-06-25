@@ -5,14 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login | CourseMark</title>
 <link rel="stylesheet" href="css/style.css">
-	<!-- Supabase JS (CDN) -->
-	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-	<script>
-		// Supabase config - replace anon key with your project's public anon key
-		const SUPABASE_URL = 'https://foxnhxtpvwvqnkwcegje.supabase.co';
-		const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZveG5oeHRwdnd2cW5rd2NlZ2plIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMDgxNTUsImV4cCI6MjA5Nzg4NDE1NX0.WrjYZzLhq5z41pFYhfdQ_yJQMxfUrAV-8PgU0ENZPEk';
-		const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-	</script>
 </head>
 <body>
 
@@ -22,7 +14,7 @@
 <li><a href="index.html">Home</a></li>
 <li><a href="courses.html">Courses</a></li>
 </ul>
-<a href="signup.html" class="login-btn">Student Sign Up</a>
+<a href="signup.html" class="login-btn"> Sign Up</a>
 </nav>
 <div class="auth-wrapper">
 
@@ -59,79 +51,16 @@ Login to continue learning with CourseMark.
 
 <p id="login-message" class="status-message" role="status" aria-live="polite"></p>
 
-<script>
-	// Attach login handler
-	const loginForm = document.getElementById('login-form');
-	const loginMsg = document.getElementById('login-message');
-
-	loginForm.addEventListener('submit', async (e) => {
-		e.preventDefault();
-		loginMsg.style.color = '#c00';
-		loginMsg.textContent = '';
-
-		const email = document.getElementById('email').value.trim();
-		const password = document.getElementById('password').value;
-
-		if (!email || !password) {
-			loginMsg.textContent = 'Please enter email and password.';
-			return;
-		}
-
-		try {
-			const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-			if (error) {
-				loginMsg.textContent = error.message || 'Login error';
-				return;
-			}
-
-			// Successful login
-			loginMsg.style.color = '#080';
-			loginMsg.textContent = 'Login successful - redirecting...';
-			window.location.href = 'student-dashboard.html';
-		} catch (err) {
-			loginMsg.textContent = err.message || 'Unexpected error';
-		}
-	});
-
-	// Optional: Google OAuth button (opens Supabase's OAuth flow)
-	document.getElementById('google-btn').addEventListener('click', async () => {
-		const { error } = await supabaseClient.auth.signInWithOAuth({
-			provider: 'google',
-			options: { redirectTo: new URL('student-dashboard.html', window.location.href).href }
-		});
-		if (error) loginMsg.textContent = error.message;
-	});
-
-	document.getElementById('forgot-password-btn').addEventListener('click', async () => {
-		const email = document.getElementById('email').value.trim();
-		loginMsg.style.color = '#c00';
-
-		if (!email) {
-			loginMsg.textContent = 'Enter your email address first.';
-			document.getElementById('email').focus();
-			return;
-		}
-
-		const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-			redirectTo: new URL('login.html', window.location.href).href
-		});
-
-		if (error) {
-			loginMsg.textContent = error.message;
-			return;
-		}
-
-		loginMsg.style.color = '#15803d';
-		loginMsg.textContent = 'Password reset instructions were sent to your email.';
-	});
-</script>
-
 </div>
 
 </div>
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/login.js"></script>
 </body>
 </html>
-
