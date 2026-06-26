@@ -111,6 +111,7 @@
 
   async function redirectByRole(profile, user) {
     const activeUser = user || (await getCurrentUser());
+
     if (!activeUser) {
       global.location.replace("login.html");
       return;
@@ -119,17 +120,23 @@
     const activeProfile = profile || (await getProfile(activeUser.id));
     const role = getUserRole(activeProfile, activeUser);
 
-    if (role === "creator") {
-      global.location.replace("creator-dashboard.html");
-      return;
-    }
+    switch (role) {
+      case "admin":
+        global.location.replace("admin/index.html");
+        break;
 
-    if (role === "student") {
-      global.location.replace("student-dashboard.html");
-      return;
-    }
+      case "creator":
+        global.location.replace("creator-dashboard.html");
+        break;
 
-    global.location.replace("login.html");
+      case "student":
+        global.location.replace("student-dashboard.html");
+        break;
+
+      default:
+        global.location.replace("login.html");
+        break;
+    }
   }
 
   async function resetPassword(email) {

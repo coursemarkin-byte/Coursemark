@@ -11,29 +11,31 @@
     <div class="dashboard-app">
       <aside class="sidebar" aria-label="Primary navigation">
         <div class="sidebar-brand">
-          <a href="creator-dashboard.html" class="logo">CourseMark</a>
+          <a href="#overview" class="logo" data-section="overview"
+            >CourseMark</a
+          >
         </div>
 
         <nav class="sidebar-nav" aria-label="Dashboard navigation">
-          <a href="#overview" class="nav-link active">
+          <a href="#overview" class="nav-link active" data-section="overview">
             <i data-lucide="layout-dashboard"></i><span>Dashboard</span>
           </a>
-          <a href="#my-courses" class="nav-link">
-            <i data-lucide="book-open"></i><span>Courses</span>
+          <a href="#my-courses" class="nav-link" data-section="my-courses">
+            <i data-lucide="book-open"></i><span>My Courses</span>
           </a>
-          <a href="#students" class="nav-link">
+          <a href="#students" class="nav-link" data-section="students">
             <i data-lucide="users"></i><span>Students</span>
           </a>
-          <a href="#reviews" class="nav-link">
+          <a href="#reviews" class="nav-link" data-section="reviews">
             <i data-lucide="star"></i><span>Reviews</span>
           </a>
-          <a href="#revenue" class="nav-link">
+          <a href="#revenue" class="nav-link" data-section="revenue">
             <i data-lucide="chart-no-axes-combined"></i><span>Revenue</span>
           </a>
-          <a href="#profile" class="nav-link">
+          <a href="#profile" class="nav-link" data-section="profile">
             <i data-lucide="circle-user-round"></i><span>Profile</span>
           </a>
-          <a href="#settings" class="nav-link">
+          <a href="#settings" class="nav-link" data-section="settings">
             <i data-lucide="settings"></i><span>Settings</span>
           </a>
         </nav>
@@ -61,21 +63,13 @@
               <input
                 id="dashboard-search"
                 type="search"
-                placeholder="Search courses, students, reviews..."
-                aria-label="Search dashboard"
+                placeholder="Search courses..."
+                aria-label="Search courses"
               />
             </label>
           </div>
 
           <div class="topbar-actions">
-            <button
-              class="icon-button"
-              type="button"
-              aria-label="Notifications"
-              data-action="notifications"
-            >
-              <i data-lucide="bell"></i><span class="badge-dot"></span>
-            </button>
             <div class="profile-dropdown">
               <button
                 class="profile-button"
@@ -84,7 +78,7 @@
               >
                 <img
                   id="creator-avatar"
-                  src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80"
+                  src="assets/images/default-avatar.png"
                   alt="Creator avatar"
                 />
                 <span data-creator-name>Creator</span>
@@ -96,27 +90,30 @@
                     id="dropdown-avatar"
                     src="assets/images/default-avatar.png"
                     alt="Profile"
-                    />
+                  />
                   <div class="dropdown-user-info">
                     <h4 id="dropdown-name">Creator</h4>
-                    <p id="dropdown-email">creator@email.com</p>
+                    <p id="dropdown-email"></p>
                     <small id="dropdown-role">Creator</small>
                   </div>
                 </div>
                 <hr />
-                <a href="#profile">
-                  <i data-lucide="user"></i>
-                  <span>My Profile</span>
+                <a href="#profile" data-section="profile">
+                  <i data-lucide="user"></i><span>My Profile</span>
                 </a>
-                <a href="#my-courses"
-                  ><i data-lucide="book-open"></i><span>My Courses</span></a
-                >
-                <a href="#revenue"
-                  ><i data-lucide="indian-rupee"></i><span>Earnings</span></a
-                >
-                <a href="#settings"
-                  ><i data-lucide="settings"></i><span>Settings</span></a
-                >
+                <a href="#my-courses" data-section="my-courses">
+                  <i data-lucide="book-open"></i><span>My Courses</span>
+                </a>
+                <a href="#revenue" data-section="revenue">
+                  <i data-lucide="indian-rupee"></i><span>Revenue</span>
+                </a>
+                <a href="#settings" data-section="settings">
+                  <i data-lucide="settings"></i><span>Settings</span>
+                </a>
+                <a href="index.html">
+                  <i data-lucide="house"></i>
+                  <span>Home</span>
+                </a>
                 <button id="logout-button" type="button">
                   <i data-lucide="log-out"></i><span>Logout</span>
                 </button>
@@ -124,149 +121,106 @@
             </div>
           </div>
         </header>
+
         <main class="page-content">
-          <section class="hero-panel" id="overview">
-            <div class="hero-copy">
-              <p class="eyebrow">
-                Welcome back, <span id="creator-welcome-name">Creator</span> 👋
-              </p>
-              <h1>Build your course business with clarity.</h1>
-              <p class="hero-text">
-                Track learner growth, revenue, course engagement, and feedback
-                from one clean creator workspace.
-              </p>
-              <button class="btn-pill" type="button" data-action="new-course">
-                <i data-lucide="plus"></i>New Course
-              </button>
+          <section
+            class="dashboard-section"
+            id="overview"
+            data-dashboard-section
+          >
+            <div class="hero-panel">
+              <div class="hero-copy">
+                <p class="eyebrow">
+                  Welcome back, <span id="creator-welcome-name">Creator</span>
+                </p>
+                <h1>Build your course business with clarity.</h1>
+                <p class="hero-text">
+                  Your creator workspace is ready. Course creation will connect
+                  here in the next MVP phase.
+                </p>
+                <button class="btn-pill" type="button" data-add-course>
+                  <i data-lucide="plus"></i>Add Course
+                </button>
+              </div>
+              <div class="hero-visual" aria-hidden="true">
+                <div class="hero-chip">
+                  <span>Active learners</span><strong>0</strong>
+                </div>
+                <div class="hero-stat-grid">
+                  <div class="hero-stat-card">
+                    <span>Revenue</span><strong>₹0</strong>
+                  </div>
+                  <div class="hero-stat-card">
+                    <span>Courses</span><strong>0</strong>
+                  </div>
+                </div>
+                <div class="hero-chart">
+                  <span class="chart-label">Revenue</span>
+                  <div class="chart-bars">
+                    <span class="bar bar-s"></span>
+                    <span class="bar bar-s"></span>
+                    <span class="bar bar-s"></span>
+                    <span class="bar bar-s"></span>
+                    <span class="bar bar-s"></span>
+                    <span class="bar bar-s"></span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="hero-visual" aria-hidden="true">
-              <div class="hero-chip">
-                <span>Active learners</span><strong>1,280</strong>
-              </div>
-              <div class="hero-stat-grid">
-                <div class="hero-stat-card">
-                  <span>Revenue</span><strong>₹24,800</strong>
+
+            <div class="stats-grid" aria-label="Creator statistics">
+              <article class="stat-card">
+                <div class="stat-card-header">
+                  <div class="stat-card-icon">
+                    <i data-lucide="book-open"></i>
+                  </div>
                 </div>
-                <div class="hero-stat-card">
-                  <span>Courses</span><strong>8</strong>
+                <h3>0</h3>
+                <p>Courses</p>
+                <span>No courses created yet</span>
+              </article>
+              <article class="stat-card">
+                <div class="stat-card-header">
+                  <div class="stat-card-icon"><i data-lucide="users"></i></div>
                 </div>
-              </div>
-              <div class="hero-chart">
-                <span class="chart-label">Weekly earnings</span>
-                <div class="chart-bars">
-                  <span class="bar bar-xl"></span
-                  ><span class="bar bar-l"></span>
-                  <span class="bar bar-m"></span
-                  ><span class="bar bar-xl"></span>
-                  <span class="bar bar-s"></span><span class="bar bar-l"></span>
+                <h3>0</h3>
+                <p>Students</p>
+                <span>No enrolled students yet</span>
+              </article>
+              <article class="stat-card">
+                <div class="stat-card-header">
+                  <div class="stat-card-icon">
+                    <i data-lucide="indian-rupee"></i>
+                  </div>
                 </div>
-              </div>
+                <h3>₹0</h3>
+                <p>Revenue</p>
+                <span>No earnings yet</span>
+              </article>
+              <article class="stat-card">
+                <div class="stat-card-header">
+                  <div class="stat-card-icon"><i data-lucide="star"></i></div>
+                </div>
+                <h3>0</h3>
+                <p>Reviews</p>
+                <span>No reviews yet</span>
+              </article>
             </div>
           </section>
 
           <section
-            class="stats-grid"
-            id="creator-stats"
-            aria-label="Creator statistics"
-          ></section>
-
-          <section class="quick-actions">
-            <div class="section-header">
-              <div>
-                <p class="eyebrow">Quick actions</p>
-                <h2>Creator tools</h2>
-              </div>
-              <p>Start the most common tasks without leaving your dashboard.</p>
-            </div>
-            <div class="action-grid">
-              <button
-                class="quick-action"
-                type="button"
-                data-action="new-course"
-              >
-                <i data-lucide="plus-circle"></i><span>New Course</span>
-              </button>
-              <button
-                class="quick-action"
-                type="button"
-                data-action="upload-lesson"
-              >
-                <i data-lucide="upload"></i><span>Upload Lesson</span>
-              </button>
-              <button
-                class="quick-action"
-                type="button"
-                data-action="create-coupon"
-              >
-                <i data-lucide="ticket-percent"></i><span>Create Coupon</span>
-              </button>
-              <button
-                class="quick-action"
-                type="button"
-                data-action="view-analytics"
-              >
-                <i data-lucide="chart-no-axes-combined"></i
-                ><span>View Analytics</span>
-              </button>
-              <button class="quick-action" type="button" data-action="withdraw">
-                <i data-lucide="wallet-cards"></i><span>Withdraw Earnings</span>
-              </button>
-            </div>
-          </section>
-
-          <section class="content-grid">
-            <article class="panel revenue-panel" id="revenue">
-              <div class="panel-heading">
-                <div>
-                  <p class="eyebrow">Revenue</p>
-                  <h2>Revenue Overview</h2>
-                </div>
-                <select id="revenue-range" aria-label="Select revenue range">
-                  <option value="7">Last 7 Days</option>
-                  <option value="30">Last 30 Days</option>
-                  <option value="365">Last Year</option>
-                </select>
-              </div>
-              <div class="revenue-summary">
-                <div>
-                  <span class="summary-label">This month</span
-                  ><strong>₹24,800</strong>
-                </div>
-                <div>
-                  <span class="summary-label">Last month</span
-                  ><strong>₹18,300</strong>
-                </div>
-                <div>
-                  <span class="summary-label">Growth</span
-                  ><strong class="text-success">+35%</strong>
-                </div>
-              </div>
-              <div class="revenue-chart" id="revenue-chart"></div>
-            </article>
-
-            <article class="panel activity-panel" id="students">
-              <div class="panel-heading">
-                <div>
-                  <p class="eyebrow">Activity</p>
-                  <h2>Recent Activity</h2>
-                </div>
-              </div>
-              <div class="timeline" id="recent-activity"></div>
-            </article>
-          </section>
-
-          <section class="panel courses-panel" id="my-courses">
+            class="panel courses-panel"
+            id="my-courses"
+            data-dashboard-section
+            hidden
+          >
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">My Courses</p>
                 <h2>Courses Overview</h2>
               </div>
-              <button
-                class="secondary-action"
-                type="button"
-                data-action="new-course"
-              >
-                <i data-lucide="plus"></i>Add course
+              <button class="secondary-action" type="button" data-add-course>
+                <i data-lucide="plus"></i>Add Course
               </button>
             </div>
             <div class="table-wrap">
@@ -274,9 +228,9 @@
                 <thead>
                   <tr>
                     <th>Thumbnail</th>
-                    <th>Course</th>
-                    <th>Students</th>
-                    <th>Rating</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Price</th>
                     <th>Status</th>
                     <th>Actions</th>
                   </tr>
@@ -285,25 +239,135 @@
               </table>
             </div>
             <p class="empty-state" id="course-search-empty" hidden>
-              No dashboard results match your search.
+              No courses match your search.
             </p>
           </section>
 
-          <section class="panel reviews-panel" id="reviews">
+          <section class="panel" id="students" data-dashboard-section hidden>
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Students</p>
+                <h2>Students</h2>
+              </div>
+            </div>
+            <p class="empty-state">No enrolled students yet.</p>
+          </section>
+
+          <section class="panel" id="reviews" data-dashboard-section hidden>
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">Reviews</p>
-                <h2>Latest Reviews</h2>
+                <h2>Reviews</h2>
               </div>
             </div>
-            <div class="reviews-list" id="review-list"></div>
+            <p class="empty-state">No reviews yet.</p>
           </section>
 
-          <section class="panel creator-settings" id="settings">
+          <section
+            class="panel revenue-panel"
+            id="revenue"
+            data-dashboard-section
+            hidden
+          >
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Revenue</p>
+                <h2>Revenue Overview</h2>
+              </div>
+            </div>
+            <div class="revenue-summary single-summary">
+              <div>
+                <span class="summary-label">Revenue</span>
+                <strong>₹0</strong>
+              </div>
+            </div>
+            <div class="revenue-chart" id="revenue-chart"></div>
+          </section>
+
+          <section class="panel" id="profile" data-dashboard-section hidden>
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">Profile</p>
+                <h2>Public Profile</h2>
+              </div>
+            </div>
+
+            <form id="creator-profile-form" class="dashboard-form profile-form">
+              <div class="profile-picture-row">
+                <img
+                  id="profile-avatar-preview"
+                  src="assets/images/default-avatar.png"
+                  alt="Profile picture"
+                />
+                <label>
+                  Profile Picture
+                  <input
+                    type="file"
+                    id="profile-avatar"
+                    accept="image/png,image/jpeg,image/webp"
+                  />
+                </label>
+              </div>
+
+              <label>
+                Full Name
+                <input type="text" id="profile-full-name" />
+              </label>
+              <label>
+                Professional Title
+                <input type="text" id="profile-title" />
+              </label>
+              <label>
+                Bio
+                <textarea id="profile-bio" rows="5"></textarea>
+              </label>
+              <label>
+                Phone
+                <input type="tel" id="profile-phone" />
+              </label>
+              <label>
+                Website
+                <input type="url" id="profile-website" />
+              </label>
+              <label>
+                Instagram
+                <input type="url" id="profile-instagram" />
+              </label>
+              <label>
+                LinkedIn
+                <input type="url" id="profile-linkedin" />
+              </label>
+              <label>
+                YouTube
+                <input type="url" id="profile-youtube" />
+              </label>
+              <label>
+                Facebook
+                <input type="url" id="profile-facebook" />
+              </label>
+              <label>
+                Experience
+                <input type="text" id="profile-experience" />
+              </label>
+              <label>
+                Languages
+                <input type="text" id="profile-languages" />
+              </label>
+
+              <button type="submit">Save Changes</button>
+            </form>
+          </section>
+
+          <section
+            class="panel creator-settings"
+            id="settings"
+            data-dashboard-section
+            hidden
+          >
             <div class="panel-heading">
               <div>
                 <p class="eyebrow">Workspace</p>
-                <h2>Creator Settings</h2>
+                <h2>Settings</h2>
               </div>
             </div>
             <div class="settings-grid">
@@ -311,101 +375,153 @@
                 <i data-lucide="circle-user-round"></i>
                 <div>
                   <h3>Public profile</h3>
-                  <p>Review how learners see your creator page.</p>
+                  <p>Manage the creator information shown to learners.</p>
                 </div>
-                <a href="#profile"> Open profile </a>
-              </article>
-              <article>
-                <i data-lucide="badge-indian-rupee"></i>
-                <div>
-                  <h3>Payout details</h3>
-                  <p>Manage your bank and payout preferences.</p>
-                </div>
-                <button type="button" data-action="withdraw">Manage</button>
-              </article>
-              <article>
-                <i data-lucide="bell-ring"></i>
-                <div>
-                  <h3>Notifications</h3>
-                  <p>Choose which course updates reach you.</p>
-                </div>
-                <button type="button" data-action="notifications">
-                  Review
-                </button>
+                <a href="#profile" data-section="profile">Open profile</a>
               </article>
             </div>
-          </section>
-          <section id="profile" class="dashboard-section" hidden>
-            <div class="section-header">
-              <h2>Profile</h2>
-              <p>Manage your public creator profile.</p>
-            </div>
-
-            <form id="creator-profile-form" class="profile-form">
-              <div class="form-group">
-                <label>Full Name</label>
-                <input type="text" id="profile-full-name" />
-              </div>
-
-              <div class="form-group">
-                <label>Professional Title</label>
-                <input
-                  type="text"
-                  id="profile-title"
-                  placeholder="Digital Marketing Expert"
-                />
-              </div>
-
-              <div class="form-group">
-                <label>Bio</label>
-                <textarea id="profile-bio" rows="5"></textarea>
-              </div>
-
-              <div class="form-group">
-                <label>Phone</label>
-                <input type="text" id="profile-phone" />
-              </div>
-
-              <div class="form-group">
-                <label>Website</label>
-                <input type="url" id="profile-website" />
-              </div>
-
-              <button type="submit" class="btn-primary">Save Changes</button>
-            </form>
           </section>
         </main>
       </div>
     </div>
 
-    <div class="dashboard-modal" id="creator-modal" hidden>
+    <div class="dashboard-modal" id="course-modal" hidden>
       <button
         class="modal-backdrop"
         type="button"
-        data-modal-close
-        aria-label="Close dialog"
+        data-course-modal-close
+        aria-label="Close course form"
       ></button>
       <section
         class="modal-card"
         role="dialog"
         aria-modal="true"
-        aria-labelledby="modal-title"
+        aria-labelledby="course-modal-title"
       >
         <div class="modal-heading">
           <div>
-            <p class="eyebrow" id="modal-eyebrow">Creator tool</p>
-            <h2 id="modal-title">New Course</h2>
+            <p class="eyebrow">Course</p>
+            <h2 id="course-modal-title">Add Course</h2>
           </div>
           <button
             class="modal-close"
             type="button"
-            data-modal-close
-            aria-label="Close dialog"
+            data-course-modal-close
+            aria-label="Close course form"
           >
             <i data-lucide="x"></i>
           </button>
         </div>
-        <div id="modal-content"></div>
+
+        <form id="course-form" class="dashboard-form course-form">
+          <input type="hidden" id="course-id" />
+          <label>
+            Choose Thumbnail
+            <input
+              type="file"
+              id="course-thumbnail"
+              accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+            />
+          </label>
+          <div class="thumbnail-preview-wrap">
+            <img
+              id="course-thumbnail-preview"
+              src="assets/images/default-avatar.png"
+              alt="Course thumbnail preview"
+            />
+          </div>
+          <label>
+            Course Title *
+            <input type="text" id="course-title" required />
+          </label>
+          <label>
+            Short Description *
+            <textarea
+              id="course-short-description"
+              rows="3"
+              required
+            ></textarea>
+          </label>
+          <label>
+            Full Description
+            <textarea id="course-full-description" rows="5"></textarea>
+          </label>
+          <label>
+            Category *
+            <input type="text" id="course-category" required />
+          </label>
+          <label>
+            Level
+            <select id="course-level">
+              <option value="">Select level</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+            </select>
+          </label>
+          <label>
+            Language
+            <input type="text" id="course-language" />
+          </label>
+          <label>
+            Price *
+            <input
+              type="number"
+              id="course-price"
+              min="0"
+              step="0.01"
+              required
+            />
+          </label>
+          <div class="modal-actions">
+            <button
+              class="secondary-action"
+              type="button"
+              data-course-modal-close
+            >
+              Cancel
+            </button>
+            <button type="submit">Save Course</button>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <div class="dashboard-modal" id="delete-course-modal" hidden>
+      <button
+        class="modal-backdrop"
+        type="button"
+        data-delete-modal-close
+        aria-label="Cancel delete"
+      ></button>
+      <section
+        class="modal-card modal-card-small"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="delete-course-title"
+      >
+        <div class="modal-heading">
+          <div>
+            <p class="eyebrow">Delete course</p>
+            <h2 id="delete-course-title">Delete this course?</h2>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button
+            class="secondary-action"
+            type="button"
+            data-delete-modal-close
+          >
+            Cancel
+          </button>
+          <button
+            class="danger-action"
+            id="confirm-delete-course"
+            type="button"
+          >
+            Delete
+          </button>
+        </div>
       </section>
     </div>
 
@@ -423,10 +539,5 @@
     <script src="js/utils.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/creator.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        lucide.createIcons();
-      });
-    </script>
   </body>
 </html>

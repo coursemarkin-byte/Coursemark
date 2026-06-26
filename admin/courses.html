@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Courses | CourseMark Admin</title>
+  <link rel="stylesheet" href="css/admin.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="../js/config.js"></script>
+</head>
+<body>
+
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><h2>CourseMark</h2><span>Admin Panel</span></div>
+    <nav>
+      <a href="index.html"><span class="icon">📊</span> Overview</a>
+      <a href="courses.html" class="active"><span class="icon">🎓</span> Courses</a>
+      <a href="creators.html"><span class="icon">👨‍🏫</span> Creators</a>
+      <a href="students.html"><span class="icon">👩‍🎓</span> Students</a>
+      <a href="settings.html"><span class="icon">⚙️</span> Settings</a>
+    </nav>
+    <div class="sidebar-footer"><a href="../index.html">← Back to Website</a></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-search"><span>🔍</span><input type="search" placeholder="Search anything..." /></div>
+      <div class="topbar-right">
+        <div class="admin-profile">
+          <img data-admin-avatar src="../assets/images/default-avatar.png" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=f5a623&color=fff'" />
+          <span data-admin-name>Administrator</span>
+        </div>
+        <button class="logout-btn" onclick="logoutAdmin()">Logout</button>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="page-header">
+        <h1>Courses</h1>
+        <p>Review, approve, and manage all courses on the platform.</p>
+      </div>
+
+      <div class="stats-grid" style="grid-template-columns: repeat(3,1fr)">
+        <div class="stat-card"><div class="stat-icon orange">⏳</div><div class="stat-info"><h3 id="pending-count">—</h3><p>Pending Review</p></div></div>
+        <div class="stat-card"><div class="stat-icon green">✅</div><div class="stat-info"><h3 id="published-count">—</h3><p>Published</p></div></div>
+        <div class="stat-card"><div class="stat-icon blue">❌</div><div class="stat-info"><h3 id="rejected-count">—</h3><p>Rejected</p></div></div>
+      </div>
+
+      <div class="table-section">
+        <div class="table-header">
+          <h2>All Courses</h2>
+          <input class="table-search" id="course-search" type="search" placeholder="Search courses..." />
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Thumbnail</th><th>Course</th><th>Creator</th><th>Category</th><th>Price</th><th>Status</th><th>Date</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="courses-table">
+            <tr class="loading-row"><td colspan="8">Loading courses...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+let allCourses = [];
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const profile = await window.requireAdmin();
+  if (!profile) return;
+
+  const sb = window.supabaseClient;
+
+  async function loadCount(statusVal, elId) {
+    const { count } = await sb.from("courses").select("*", { count: "exact", head: true }).eq("status", statusVal);
+    document.getElementById(elId).textContent = count ?? 0;
+  }
+
+  loadCount("pending_review", "pending-count");
+  loadCount("published", "published-count");
+  loadCount("rejected", "rejected-count");
+
+  const { data, error } = await sb.from("courses").select("*, profiles(full_name)").order("created_at", { ascending: false });
+
+  const tbody = document.getElementById("courses-table");
+
+  if (error || !data || data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">🎓</div><p>No courses yet</p></div></td></tr>`;
+    return;
+  }
+
+  allCourses = data;
+  renderCourses(allCourses);
+
+  document.getElementById("course-search").addEventListener("input", e => {
+    const q = e.target.value.toLowerCase();
+    renderCourses(allCourses.filter(c => (c.title||"").toLowerCase().includes(q) || (c.category||"").toLowerCase().includes(q)));
+  });
+});
+
+function renderCourses(courses) {
+  const tbody = document.getElementById("courses-table");
+  if (!courses.length) {
+    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">🔍</div><p>No courses found</p></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = courses.map(c => `
+    <tr>
+      <td>${c.thumbnail_url ? `<img class="course-thumb" src="${c.thumbnail_url}" alt="">` : `<div class="thumb-placeholder">🎓</div>`}</td>
+      <td><strong>${c.title || "Untitled"}</strong></td>
+      <td>${c.profiles?.full_name || "Unknown"}</td>
+      <td>${c.category || "—"}</td>
+      <td>${c.price ? "₹" + c.price : "Free"}</td>
+      <td><span class="badge badge-${c.status === 'published' ? 'published' : c.status === 'rejected' ? 'rejected' : 'pending'}">${c.status || "pending"}</span></td>
+      <td>${new Date(c.created_at).toLocaleDateString("en-IN")}</td>
+      <td>
+        ${c.status !== "published" ? `<button class="action-btn btn-approve" onclick="updateStatus('${c.id}','published',this)">Approve</button>` : ""}
+        ${c.status !== "rejected" ? `<button class="action-btn btn-reject" onclick="updateStatus('${c.id}','rejected',this)">Reject</button>` : ""}
+      </td>
+    </tr>
+  `).join("");
+}
+
+async function updateStatus(id, status, btn) {
+  btn.disabled = true;
+  const { error } = await window.supabaseClient.from("courses").update({ status }).eq("id", id);
+  if (error) { showToast("Action failed", "error"); btn.disabled = false; return; }
+  showToast(status === "published" ? "Course approved!" : "Course rejected.", status === "published" ? "success" : "error");
+  const course = allCourses.find(c => c.id === id);
+  if (course) course.status = status;
+  renderCourses(allCourses);
+}
+</script>
+
+</body>
+</html>

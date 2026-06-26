@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Overview | CourseMark Admin</title>
+  <link rel="stylesheet" href="css/admin.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="../js/config.js"></script>
+</head>
+<body>
+
+<div class="admin-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <h2>CourseMark</h2>
+      <span>Admin Panel</span>
+    </div>
+    <nav>
+      <a href="index.html" class="active"><span class="icon">📊</span> Overview</a>
+      <a href="courses.html"><span class="icon">🎓</span> Courses</a>
+      <a href="creators.html"><span class="icon">👨‍🏫</span> Creators</a>
+      <a href="students.html"><span class="icon">👩‍🎓</span> Students</a>
+      <a href="settings.html"><span class="icon">⚙️</span> Settings</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../index.html">← Back to Website</a>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="topbar-search">
+        <span>🔍</span>
+        <input type="search" placeholder="Search anything..." />
+      </div>
+      <div class="topbar-right">
+        <div class="admin-profile">
+          <img data-admin-avatar src="../assets/images/default-avatar.png" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=f5a623&color=fff'" />
+          <span data-admin-name>Administrator</span>
+        </div>
+        <button class="logout-btn" onclick="logoutAdmin()">Logout</button>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="content">
+
+      <div class="page-header">
+        <h1>Overview</h1>
+        <p>Welcome back. Here's what's happening on CourseMark.</p>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon orange">⏳</div>
+          <div class="stat-info">
+            <h3 id="pending-count">—</h3>
+            <p>Pending Review</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">✅</div>
+          <div class="stat-info">
+            <h3 id="published-count">—</h3>
+            <p>Published Courses</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple">👨‍🏫</div>
+          <div class="stat-info">
+            <h3 id="creator-count">—</h3>
+            <p>Total Creators</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue">👩‍🎓</div>
+          <div class="stat-info">
+            <h3 id="student-count">—</h3>
+            <p>Total Students</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending Courses Table -->
+      <div class="table-section">
+        <div class="table-header">
+          <h2>Courses Pending Review</h2>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Thumbnail</th>
+              <th>Course</th>
+              <th>Creator</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Submitted</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="pending-table">
+            <tr class="loading-row"><td colspan="7">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const profile = await window.requireAdmin();
+  if (!profile) return;
+
+  const sb = window.supabaseClient;
+
+  // Load stats
+  async function loadCount(table, filter, elId) {
+    let query = sb.from(table).select("*", { count: "exact", head: true });
+    if (filter) query = query.eq(filter[0], filter[1]);
+    const { count } = await query;
+    document.getElementById(elId).textContent = count ?? 0;
+  }
+
+  loadCount("courses", ["status", "pending_review"], "pending-count");
+  loadCount("courses", ["status", "published"], "published-count");
+  loadCount("profiles", ["role", "creator"], "creator-count");
+  loadCount("profiles", ["role", "student"], "student-count");
+
+  // Load pending courses
+  const { data: courses, error } = await sb
+    .from("courses")
+    .select("*, profiles(full_name)")
+    .eq("status", "pending_review")
+    .order("created_at", { ascending: false })
+    .limit(10);
+
+  const tbody = document.getElementById("pending-table");
+
+  if (error || !courses || courses.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">🎉</div><p>No courses pending review</p></div></td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = courses.map(c => `
+    <tr>
+      <td>${c.thumbnail_url
+        ? `<img class="course-thumb" src="${c.thumbnail_url}" alt="${c.title}">`
+        : `<div class="thumb-placeholder">🎓</div>`}
+      </td>
+      <td><strong>${c.title || "Untitled"}</strong></td>
+      <td>${c.profiles?.full_name || "Unknown"}</td>
+      <td>${c.category || "—"}</td>
+      <td>${c.price ? "₹" + c.price : "Free"}</td>
+      <td>${new Date(c.created_at).toLocaleDateString("en-IN")}</td>
+      <td>
+        <button class="action-btn btn-approve" onclick="approveCourse('${c.id}', this)">Approve</button>
+        <button class="action-btn btn-reject" onclick="rejectCourse('${c.id}', this)">Reject</button>
+      </td>
+    </tr>
+  `).join("");
+});
+
+async function approveCourse(id, btn) {
+  btn.disabled = true; btn.textContent = "...";
+  const { error } = await window.supabaseClient.from("courses").update({ status: "published" }).eq("id", id);
+  if (error) { showToast("Failed to approve", "error"); btn.disabled = false; btn.textContent = "Approve"; return; }
+  showToast("Course approved and published!", "success");
+  btn.closest("tr").remove();
+}
+
+async function rejectCourse(id, btn) {
+  btn.disabled = true; btn.textContent = "...";
+  const { error } = await window.supabaseClient.from("courses").update({ status: "rejected" }).eq("id", id);
+  if (error) { showToast("Failed to reject", "error"); btn.disabled = false; btn.textContent = "Reject"; return; }
+  showToast("Course rejected.", "error");
+  btn.closest("tr").remove();
+}
+</script>
+
+</body>
+</html>   

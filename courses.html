@@ -129,5 +129,37 @@
     <script src="js/auth.js"></script>
     <script src="js/script.js"></script>
     <script src="js/courses.js"></script>
+    <script>
+// Check session and update nav
+document.addEventListener("DOMContentLoaded", async () => {
+  const { data: { user } } = await window.supabaseClient.auth.getUser();
+
+  const navActions = document.querySelector(".nav-actions");
+  if (!navActions) return;
+
+  if (user) {
+    // Get profile name
+    const { data: profile } = await window.supabaseClient
+      .from("profiles").select("full_name").eq("id", user.id).single();
+
+    const name = profile?.full_name?.split(" ")[0] || "My Account";
+
+    navActions.innerHTML = `
+      <a href="student-dashboard.html" class="login-btn">👋 ${name}</a>
+      <button onclick="handleLogout()" class="nav-login-link" 
+        style="background:none;border:none;cursor:pointer;font-size:14px;color:#718096">
+        Logout
+      </button>`;
+  }
+});
+
+async function handleLogout() {
+  await window.supabaseClient.auth.signOut();
+  window.location.replace("login.html");
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/nav.js"></script>
   </body>
 </html>

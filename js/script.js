@@ -15,11 +15,13 @@
       return;
     }
 
-    const role = auth.getUserRole(profile, user);
-    const dashboard =
-      role === "creator"
-        ? "creator-dashboard.html"
-        : "student-dashboard.html";
+    let dashboard = "student-dashboard.html";
+
+    if (role === "admin") {
+      dashboard = "admin/index.html";
+    } else if (role === "creator") {
+      dashboard = "creator-dashboard.html";
+    }
 
     navActions.innerHTML = `
       <a href="${dashboard}" class="nav-login-link">Dashboard</a>
@@ -49,19 +51,17 @@
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    document
-      .querySelectorAll("[data-auth-logout]")
-      .forEach((logoutControl) => {
-        logoutControl.addEventListener("click", async (event) => {
-          event.preventDefault();
+    document.querySelectorAll("[data-auth-logout]").forEach((logoutControl) => {
+      logoutControl.addEventListener("click", async (event) => {
+        event.preventDefault();
 
-          try {
-            await auth.logout();
-          } catch (error) {
-            console.error("Logout failed:", error);
-          }
-        });
+        try {
+          await auth.logout();
+        } catch (error) {
+          console.error("Logout failed:", error);
+        }
       });
+    });
 
     refreshNavigation();
   });

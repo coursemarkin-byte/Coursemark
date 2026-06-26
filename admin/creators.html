@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creators | CourseMark Admin</title>
+  <link rel="stylesheet" href="css/admin.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="../js/config.js"></script>
+</head>
+<body>
+
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><h2>CourseMark</h2><span>Admin Panel</span></div>
+    <nav>
+      <a href="index.html"><span class="icon">📊</span> Overview</a>
+      <a href="courses.html"><span class="icon">🎓</span> Courses</a>
+      <a href="creators.html" class="active"><span class="icon">👨‍🏫</span> Creators</a>
+      <a href="students.html"><span class="icon">👩‍🎓</span> Students</a>
+      <a href="settings.html"><span class="icon">⚙️</span> Settings</a>
+    </nav>
+    <div class="sidebar-footer"><a href="../index.html">← Back to Website</a></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-search"><span>🔍</span><input type="search" placeholder="Search anything..." /></div>
+      <div class="topbar-right">
+        <div class="admin-profile">
+          <img data-admin-avatar src="../assets/images/default-avatar.png" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=f5a623&color=fff'" />
+          <span data-admin-name>Administrator</span>
+        </div>
+        <button class="logout-btn" onclick="logoutAdmin()">Logout</button>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="page-header">
+        <h1>Creators</h1>
+        <p>Manage all creators on the CourseMark platform.</p>
+      </div>
+
+      <div class="table-section">
+        <div class="table-header">
+          <h2>All Creators</h2>
+          <input class="table-search" id="creator-search" type="search" placeholder="Search creators..." />
+        </div>
+        <table>
+          <thead>
+            <tr><th>Creator</th><th>Email</th><th>Joined</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="creators-table">
+            <tr class="loading-row"><td colspan="4">Loading creators...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+let allCreators = [];
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const profile = await window.requireAdmin();
+  if (!profile) return;
+
+  const { data, error } = await window.supabaseClient
+    .from("profiles").select("*").eq("role", "creator").order("created_at", { ascending: false });
+
+  const tbody = document.getElementById("creators-table");
+
+  if (error || !data || data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="4"><div class="empty-state"><div class="empty-icon">👨‍🏫</div><p>No creators yet</p></div></td></tr>`;
+    return;
+  }
+
+  allCreators = data;
+  renderCreators(allCreators);
+
+  document.getElementById("creator-search").addEventListener("input", e => {
+    const q = e.target.value.toLowerCase();
+    renderCreators(allCreators.filter(c => (c.full_name||"").toLowerCase().includes(q) || (c.email||"").toLowerCase().includes(q)));
+  });
+});
+
+function renderCreators(creators) {
+  const tbody = document.getElementById("creators-table");
+  if (!creators.length) {
+    tbody.innerHTML = `<tr><td colspan="4"><div class="empty-state"><div class="empty-icon">🔍</div><p>No creators found</p></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = creators.map(c => `
+    <tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:10px">
+          <img src="${c.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(c.full_name||'C')}&background=f5a623&color=fff`}" 
+               style="width:36px;height:36px;border-radius:50%;object-fit:cover" alt="">
+          <strong>${c.full_name || "Unknown"}</strong>
+        </div>
+      </td>
+      <td>${c.email || "—"}</td>
+      <td>${new Date(c.created_at).toLocaleDateString("en-IN")}</td>
+      <td>
+        <button class="action-btn btn-view" onclick="viewCreator('${c.id}')">View</button>
+        <button class="action-btn btn-reject" onclick="removeCreator('${c.id}', this)">Remove</button>
+      </td>
+    </tr>
+  `).join("");
+}
+
+function viewCreator(id) {
+  window.open(`../instructor-profile.html?id=${id}`, "_blank");
+}
+
+async function removeCreator(id, btn) {
+  if (!confirm("Remove this creator? Their role will be changed to student.")) return;
+  btn.disabled = true;
+  const { error } = await window.supabaseClient.from("profiles").update({ role: "student" }).eq("id", id);
+  if (error) { showToast("Failed to remove creator", "error"); btn.disabled = false; return; }
+  showToast("Creator removed.", "error");
+  allCreators = allCreators.filter(c => c.id !== id);
+  renderCreators(allCreators);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Students | CourseMark Admin</title>
+  <link rel="stylesheet" href="css/admin.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="../js/config.js"></script>
+</head>
+<body>
+
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><h2>CourseMark</h2><span>Admin Panel</span></div>
+    <nav>
+      <a href="index.html"><span class="icon">📊</span> Overview</a>
+      <a href="courses.html"><span class="icon">🎓</span> Courses</a>
+      <a href="creators.html"><span class="icon">👨‍🏫</span> Creators</a>
+      <a href="students.html" class="active"><span class="icon">👩‍🎓</span> Students</a>
+      <a href="settings.html"><span class="icon">⚙️</span> Settings</a>
+    </nav>
+    <div class="sidebar-footer"><a href="../index.html">← Back to Website</a></div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-search"><span>🔍</span><input type="search" placeholder="Search anything..." /></div>
+      <div class="topbar-right">
+        <div class="admin-profile">
+          <img data-admin-avatar src="../assets/images/default-avatar.png" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=f5a623&color=fff'" />
+          <span data-admin-name>Administrator</span>
+        </div>
+        <button class="logout-btn" onclick="logoutAdmin()">Logout</button>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="page-header">
+        <h1>Students</h1>
+        <p>View and manage all student accounts.</p>
+      </div>
+
+      <div class="table-section">
+        <div class="table-header">
+          <h2>All Students</h2>
+          <input class="table-search" id="student-search" type="search" placeholder="Search students..." />
+        </div>
+        <table>
+          <thead>
+            <tr><th>Student</th><th>Email</th><th>Role</th><th>Joined</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="students-table">
+            <tr class="loading-row"><td colspan="5">Loading students...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+let allStudents = [];
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const profile = await window.requireAdmin();
+  if (!profile) return;
+
+  const { data, error } = await window.supabaseClient
+    .from("profiles").select("*").eq("role", "student").order("created_at", { ascending: false });
+
+  const tbody = document.getElementById("students-table");
+
+  if (error || !data || data.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state"><div class="empty-icon">👩‍🎓</div><p>No students yet</p></div></td></tr>`;
+    return;
+  }
+
+  allStudents = data;
+  renderStudents(allStudents);
+
+  document.getElementById("student-search").addEventListener("input", e => {
+    const q = e.target.value.toLowerCase();
+    renderStudents(allStudents.filter(s => (s.full_name||"").toLowerCase().includes(q) || (s.email||"").toLowerCase().includes(q)));
+  });
+});
+
+function renderStudents(students) {
+  const tbody = document.getElementById("students-table");
+  if (!students.length) {
+    tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state"><div class="empty-icon">🔍</div><p>No students found</p></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = students.map(s => `
+    <tr>
+      <td>
+        <div style="display:flex;align-items:center;gap:10px">
+          <img src="${s.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(s.full_name||'S')}&background=3182ce&color=fff`}"
+               style="width:36px;height:36px;border-radius:50%;object-fit:cover" alt="">
+          <strong>${s.full_name || "Unknown"}</strong>
+        </div>
+      </td>
+      <td>${s.email || "—"}</td>
+      <td><span class="badge badge-student">Student</span></td>
+      <td>${new Date(s.created_at).toLocaleDateString("en-IN")}</td>
+      <td>
+        <button class="action-btn btn-approve" onclick="makeCreator('${s.id}', this)">Make Creator</button>
+      </td>
+    </tr>
+  `).join("");
+}
+
+async function makeCreator(id, btn) {
+  if (!confirm("Upgrade this student to a Creator account?")) return;
+  btn.disabled = true;
+  const { error } = await window.supabaseClient.from("profiles").update({ role: "creator" }).eq("id", id);
+  if (error) { showToast("Failed to upgrade", "error"); btn.disabled = false; return; }
+  showToast("Student upgraded to Creator!", "success");
+  allStudents = allStudents.filter(s => s.id !== id);
+  renderStudents(allStudents);
+}
+</script>
+
+</body>
+</html>
